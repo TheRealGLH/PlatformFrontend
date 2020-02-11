@@ -2,7 +2,7 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
       <div class="menu">
-<h1>To be made</h1>
+<h3>To be made</h3>
 <router-link to="/"><button>Back</button></router-link>
   </div>
   </div>

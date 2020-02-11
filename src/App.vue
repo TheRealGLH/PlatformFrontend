@@ -2,9 +2,9 @@
   <div id="app">
     <!--<img src="./assets/logo.png">-->
     <h1>Platform Wars!</h1>
-	<transition name="fade">
+    <transition name="fade">
     <router-view/>
-	</transition>
+    </transition>
     <footer class="footer">Current version <b class="version-hash">{{version}}</b></footer>
   </div>
 </template>
@@ -21,6 +21,14 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: 'TF2 Bold';
+  src: url(/static/fonts/tf2build.ttf) format('truetype');
+  font-weight: 400;
+}
+h1,h2,h3{
+  font-family: TF2 Bold;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
