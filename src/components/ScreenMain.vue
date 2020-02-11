@@ -2,13 +2,13 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
       <div class="menu">
-  <button id="btnLogIn">Log In</button>
+  <router-link to="/login"><button id="btnLogIn">Log In</button></router-link>
 <br/>
-  <button id="btnRegister">Register</button>
+  <router-link to="/placeholder"><button id="btnRegister">Register</button></router-link>
 <br/>
-  <button id="btnDebug">Test Sprites</button>
+  <router-link to="/placeholder"><button id="btnDebug">Test Sprites</button></router-link>
 <br/>
-  <button id="btnInput">Test Input</button>
+  <router-link to="/placeholder"><button id="btnInput">Test Input</button></router-link>
   </div>
   </div>
 </template>

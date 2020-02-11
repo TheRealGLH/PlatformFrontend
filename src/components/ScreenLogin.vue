@@ -2,13 +2,20 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
       <div class="menu">
-  <button id="btnLogIn">Log In</button>
-<br/>
-  <button id="btnRegister">Register</button>
-<br/>
-  <button id="btnDebug">Test Sprites</button>
-<br/>
-  <button id="btnInput">Test Input</button>
+<ul>
+<li>
+<input placeholder="User name" id="LoginUserName" />
+</li>
+
+<li>
+<input placeholder="Password" type="password" id="LoginPassword" />
+</li>
+
+<li>
+<button id="LoginSubmit">Log in</button>
+</li>
+</ul>
+<router-link to="/"><button>Back</button></router-link>
   </div>
   </div>
 </template>
@@ -18,7 +25,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome!'
+      msg: 'Log in.'
     }
   }
 }
@@ -34,7 +41,7 @@ ul {
   padding: 0;
 }
 li {
-  display: inline-block;
+  //display: inline-block;
   margin: 0 10px;
 }
 a {
@@ -48,7 +55,12 @@ button {
   font-family: Helvetica, Arial, Sans-Serif;
 }
 button:hover {
--webkit-box-shadow: 0px 0px 6px 5px rgba(0,0,0,0.22); 
+-webkit-box-shadow: 0px 0px 6px 5px rgba(0,0,0,0.22);
 box-shadow: 0px 0px 6px 5px rgba(0,0,0,0.22);
+}
+input{
+  margin: 7px;
+  font-size:30px;
+  font-family: Helvetica, Arial, Sans-Serif;
 }
 </style>

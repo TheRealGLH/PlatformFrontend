@@ -2,13 +2,8 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
       <div class="menu">
-  <button id="btnLogIn">Log In</button>
-<br/>
-  <button id="btnRegister">Register</button>
-<br/>
-  <button id="btnDebug">Test Sprites</button>
-<br/>
-  <button id="btnInput">Test Input</button>
+<h1>To be made</h1>
+<router-link to="/"><button>Back</button></router-link>
   </div>
   </div>
 </template>
@@ -18,7 +13,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome!'
+      msg: 'Input test'
     }
   }
 }
@@ -48,7 +43,7 @@ button {
   font-family: Helvetica, Arial, Sans-Serif;
 }
 button:hover {
--webkit-box-shadow: 0px 0px 6px 5px rgba(0,0,0,0.22); 
+-webkit-box-shadow: 0px 0px 6px 5px rgba(0,0,0,0.22);
 box-shadow: 0px 0px 6px 5px rgba(0,0,0,0.22);
 }
 </style>
