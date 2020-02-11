@@ -1,10 +1,9 @@
 <template>
   <div class="hello">
     <h2>{{ msg }}</h2>
-      <div class="menu">
-<h1>To be made</h1>
-<router-link to="/"><button>Back</button></router-link>
-  </div>
+<canvas id="gamePane" ref="gamePane">
+
+</canvas>
   </div>
 </template>
 
@@ -15,11 +14,27 @@ export default {
     return {
       msg: 'Game'
     }
+  },
+  mounted () {
+    var img = document.createElement('img')
+    var canvas = document.createElement('canvas')
+	canvas = this.$refs.gamePane
+	canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+
+    img.src = require('../assets/sprites/platformplayer.png')
+    img.onload = function (a) {
+      var h = a.target.height
+      var w = a.target.width
+      var c = canvas.getContext('2d')
+      canvas.width = 600
+      canvas.height = 600
+      c.drawImage(img, 0, 0)
+    }
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped src="@/assets/css/gameview.css">
 </style>
-

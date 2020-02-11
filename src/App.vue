@@ -29,6 +29,9 @@ export default {
 h1,h2,h3{
   font-family: TF2 Bold;
 }
+h1{
+  font-size:60px;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
