@@ -4,7 +4,7 @@
       <div class="menu">
   <router-link to="/login"><button id="btnLogIn">Log In</button></router-link>
 <br/>
-  <router-link to="/placeholder"><button id="btnRegister">Register</button></router-link>
+  <router-link to="/register"><button id="btnRegister">Register</button></router-link>
 <br/>
   <router-link to="/placeholder"><button id="btnDebug">Test Sprites</button></router-link>
 <br/>
