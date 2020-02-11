@@ -3,7 +3,7 @@
     <!--<img src="./assets/logo.png">-->
     <h1>Platform Wars!</h1>
     <router-view/>
-    <footer class="version-info">Current version {{version}}</footer>
+    <footer class="footer">Current version <b class="version-hash">{{version}}</b></footer>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   name: 'App',
   data () {
     return {
-      version: gitDescribeSync().hash
+      version: process.env.VUE_APP_GIT_HASH
     }
   }
 }
@@ -27,11 +27,15 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.version-info{
+.footer{
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   margin-bottom:15px;
+  color:#DDD;
+}
+.version-hash{
+  color: #FF9D1D;
 }
 </style>
