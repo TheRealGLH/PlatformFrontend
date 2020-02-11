@@ -22,4 +22,3 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped src="@/assets/css/menu.css">
 </style>
-
