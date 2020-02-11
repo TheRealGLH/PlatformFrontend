@@ -1,0 +1,7 @@
+$font_path: '~@/assets/fonts/';
+
+@font-face {
+  font-family: 'TF2';
+  //src: url(~@/assets/fonts/TF2.ttf) format('truetype');
+  src: url(/static/fonts/TF2.ttf) format('truetype');
+}

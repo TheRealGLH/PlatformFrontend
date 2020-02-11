@@ -1,0 +1,25 @@
+<template>
+  <div class="hello">
+    <h2>{{ msg }}</h2>
+      <div class="menu">
+<h1>To be made</h1>
+<router-link to="/"><button>Back</button></router-link>
+  </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HelloWorld',
+  data () {
+    return {
+      msg: 'Game'
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped src="@/assets/css/gameview.css">
+</style>
+
