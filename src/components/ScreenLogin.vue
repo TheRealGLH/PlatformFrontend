@@ -2,6 +2,7 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
       <div class="menu">
+      <div class="menuBox">
 <ul>
 <li>
 <input placeholder="User name" id="LoginUserName" class="inputUserInfo"/>
@@ -15,7 +16,9 @@
 <button id="LoginSubmit">Log in</button>
 </li>
 </ul>
+</div>
 <router-link to="/"><button>Back</button></router-link>
+
   </div>
   </div>
 </template>

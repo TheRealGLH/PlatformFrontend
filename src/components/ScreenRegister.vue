@@ -2,7 +2,23 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
       <div class="menu">
-<h1>To be made</h1>
+<ul>
+<li>
+<input placeholder="User name" id="LoginUserName" class="inputUserInfo"/>
+</li>
+
+<li>
+<input placeholder="Password" type="password" id="LoginPassword" class="inputUserInfo"/>
+</li>
+
+<li>
+<input placeholder="Confirm Password" type="password" id="LoginPasswordConfirm" class="inputUserInfo"/>
+</li>
+
+<li>
+<button id="LoginSubmit">Log in</button>
+</li>
+</ul>
 <router-link to="/"><button>Back</button></router-link>
   </div>
   </div>

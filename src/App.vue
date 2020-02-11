@@ -2,7 +2,9 @@
   <div id="app">
     <!--<img src="./assets/logo.png">-->
     <h1>Platform Wars!</h1>
+	<transition name="fade">
     <router-view/>
+	</transition>
     <footer class="footer">Current version <b class="version-hash">{{version}}</b></footer>
   </div>
 </template>
@@ -37,5 +39,11 @@ export default {
 }
 .version-hash{
   color: #FF9D1D;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .2s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
 }
 </style>
