@@ -12,23 +12,32 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Game'
+      msg: 'In game...'
     }
   },
   mounted () {
     var img = document.createElement('img')
+    var img2 = document.createElement('img')
     var canvas = document.createElement('canvas')
-	canvas = this.$refs.gamePane
-	canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    canvas = this.$refs.gamePane
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
 
     img.src = require('../assets/sprites/platformplayer.png')
+    img2.src = require('../assets/sprites/rocket.gif')
     img.onload = function (a) {
-      var h = a.target.height
-      var w = a.target.width
+      // var h = a.target.height
+      // var w = a.target.width
       var c = canvas.getContext('2d')
-      canvas.width = 600
-      canvas.height = 600
+      canvas.width = 1270
+      canvas.height = 720
       c.drawImage(img, 0, 0)
+      c.drawImage(img, 64, 0)
+    }
+    img2.onload = function (a) {
+      // var h = a.target.height
+      // var w = a.target.width
+      var c = canvas.getContext('2d')
+      c.drawImage(img2, 32, 0)
     }
   }
 }

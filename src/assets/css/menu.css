@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'TF2';
-  src: url(/static/fonts/TF2.ttf) format('truetype');
+  src: url('../fonts/TF2.ttf') format('truetype');
   font-weight: 400;
 }
 @font-face {
   font-family: 'TF2 Professor';
-  src: url(/static/fonts/tf2professor.ttf) format('truetype');
+  src: url('../fonts/tf2professor.ttf') format('truetype');
   font-weight: 400;
 }
 h1, h2 {
