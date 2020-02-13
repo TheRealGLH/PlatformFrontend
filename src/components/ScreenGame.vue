@@ -1,52 +1,44 @@
 <template>
   <div class="hello">
     <h2>{{ msg }}</h2>
-<div id="gamePane" ref="gamePane">
+<canvas id="gamePane" ref="gamePane">
 
-</div>
+</canvas>
   </div>
 </template>
 
 <script>
-import * as PIXI from 'pixi.js'
-import Vue from 'vue'
 export default {
-  name: 'Game',
+  name: 'HelloWorld',
   data () {
     return {
-      msg: 'In game...',
-      // These need to be contained in an object because providers are not reactive.
-      PIXIWrapper: {
-        // Expose PIXI and the created app to all descendants.
-        PIXI,
-        PIXIApp: null
-      },
-      // Expose the event bus to all descendants so they can listen for the app-ready event.
-      EventBus: new Vue()
+      msg: 'In game...'
     }
   },
-  // Allows descendants to inject everything.
-  provide () {
-    return {
-      PIXIWrapper: this.PIXIWrapper,
-      EventBus: this.EventBus
-    }
-  },
-
   mounted () {
-    // Determine the width and height of the renderer wrapper element.
-    const renderCanvas = this.$refs.gamePane
-    const w = renderCanvas.offsetWidth
-    const h = renderCanvas.offsetHeight
+    var img = document.createElement('img')
+    var img2 = document.createElement('img')
+    var canvas = document.createElement('canvas')
+    canvas = this.$refs.gamePane
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
 
-    // Create a new PIXI app.
-    this.PIXIWrapper.PIXIApp = new PIXI.Application(w, h, {
-      view: renderCanvas,
-      backgroundColor: 0x000000
-    })
-    renderCanvas.appendChild(this.PIXIWrapper.PIXIApp.view)
-
-    this.EventBus.$emit('ready')
+    img.src = require('../assets/sprites/platformplayer.png')
+    img2.src = require('../assets/sprites/rocket.gif')
+    img.onload = function (a) {
+      // var h = a.target.height
+      // var w = a.target.width
+      var c = canvas.getContext('2d')
+      canvas.width = 1270
+      canvas.height = 720
+      c.drawImage(img, 0, 0)
+      c.drawImage(img, 64, 0)
+    }
+    img2.onload = function (a) {
+      // var h = a.target.height
+      // var w = a.target.width
+      var c = canvas.getContext('2d')
+      c.drawImage(img2, 32, 0)
+    }
   }
 }
 
