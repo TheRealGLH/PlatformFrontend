@@ -20,10 +20,12 @@ li {
   margin: 0 1%;
 }
 a {
-  color: #42b983;
+  color: #e1737d;
 }
 button {
   border: 0px hidden #1C6EA4;
+  color: #e8e8e7;
+  background-color: #8aa29e;
   font-size: 210%;
   margin: 2%;
   padding: 20px;
@@ -55,8 +57,8 @@ transform: translateX(-50%);
   margin: 7px;
   text-indent: 9px;
   border: 0px hidden;
-  background-color:#f7f7f7;
-  color:#2E2F2E;
+  background-color:#edf1f0;
+  color:#576260;
   -webkit-border-radius: 15px;
 border-radius: 15px;
   font-family: TF2 Professor;
@@ -66,12 +68,16 @@ border-radius: 15px;
 .inputUserInfo:focus{
     -webkit-transform: scale(1.5, 1.5);
 transform: scale(1.5, 1.5);
-background-color:#f9f9f9;
+}
+.inputUserInfo:focus,.inputUserInfo:hover{
+  background-color:#fff;
 }
 .menuBox{
-	background-color:#fafafa;
-  padding:.2%;
+	background-color:#9fb2af;
+    padding:4px;
+    padding-right:10px;
   margin: .3%;
+  border-radius:40px;
   /*
   width: 110%;
   height: 110%;
