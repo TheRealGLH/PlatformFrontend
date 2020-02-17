@@ -6,7 +6,7 @@
 <br/>
   <router-link to="/register"><button id="btnRegister">Register</button></router-link>
 <br/>
-  <router-link to="/game"><button id="btnDebug">Test Sprites</button></router-link>
+  <router-link to="/game"><button id="btnDebug">Debug</button></router-link>
 <br/>
   <router-link to="/placeholder"><button id="btnInput">Test Input</button></router-link>
   </div>

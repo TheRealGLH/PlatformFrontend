@@ -30,10 +30,14 @@ button {
   -webkit-border-radius: 15px;
   border-radius: 15px;
   font-family: TF2;
+    -webkit-transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 button:hover {
 -webkit-box-shadow: 0px 0px 6px 5px rgba(0,0,0,0.22);
 box-shadow: 0px 0px 3px 5px rgba(0,0,0,0.22);
+-webkit-transform: scale(1.25, 1.25);
+transform: scale(1.25, 1.25);
 }
 .hello{
 position: absolute;
@@ -46,16 +50,30 @@ transform: translateX(-50%);
 }
 .inputUserInfo{
   font-size:40px;
+  font-size:3vw;
   font-style: bold;
   margin: 7px;
+  text-indent: 9px;
   border: 0px hidden;
   background-color:#f7f7f7;
   color:#2E2F2E;
   -webkit-border-radius: 15px;
 border-radius: 15px;
   font-family: TF2 Professor;
+      -webkit-transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.inputUserInfo:focus{
+    -webkit-transform: scale(1.5, 1.5);
+transform: scale(1.5, 1.5);
+background-color:#f9f9f9;
 }
 .menuBox{
 	background-color:#fafafa;
   padding:.2%;
+  margin: .3%;
+  /*
+  width: 110%;
+  height: 110%;
+  */
 }
