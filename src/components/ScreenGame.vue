@@ -2,8 +2,11 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
 
-<canvas id="gamePane" ref="gamePane"></canvas>
-<br/><button @click="addSprite">Add Sprite</button>
+<canvas id="gamePane" ref="gamePane" :width="w" :height="h"></canvas>
+<br/>
+<button @click="addSprite">Add Sprite</button>
+<button @click="updateAllSprites">Update</button>
+<button @click="deleteAllSprites">Delete</button>
   </div>
 </template>
 
@@ -14,19 +17,95 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'In game...'
+      msg: 'In game...',
+      w: 800,
+      h: 600,
+      debugSpriteCount: 0
     }
   },
+  props: {
+    // spritesheet: Object
+  },
   mounted () {
+    this.init()
     this.stage = new cjs.Stage(this.$refs.gamePane)
     cjs.Ticker.addEventListener('tick', this.stage)
   },
   methods: {
+    init () {
+      this.spriteMap = new Map()
+      var data = {
+        images: ['static/spritesheet.png'],
+        frames: {width: 32, height: 32},
+        animations: {
+          ammo: {
+            frames: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+          },
+          axe: {
+            frames: [12, 13]
+          },
+          explosion: {
+            frames: [14, 15, 16, 17, 18, 19, 20]
+          },
+          grenade: {
+            frames: [21, 22, 23, 24]
+          },
+          platformsolid: 25,
+          platformnonsolid: 26,
+          player: 27,
+          rocket: {
+            frames: [28, 29, 30, 31, 32, 33, 34, 35]
+          },
+          slash: {
+            frames: [36, 37, 38, 39, 40]
+          },
+          slashEnd: 42,
+          swordAttack: [36, 37, 38, 39, 40, 41, 'slashEnd'],
+          bomb: 43,
+          bullet: 44,
+          placeholder: 45
+        }
+      }
+      this.spritesheet = new cjs.SpriteSheet(data)
+    },
     addSprite () {
-      var newText = new cjs.Text('Hello World')
-      newText.x = 32
-      newText.y = 32
+      var newText = new cjs.Sprite(this.spritesheet, 'rocket')
+      newText.x = Math.floor(Math.random() * this.w)
+      newText.y = Math.floor(Math.random() * this.h)
       this.stage.addChild(newText)
+      this.spriteMap.set(this.debugSpriteCount, newText)
+      this.debugSpriteCount++
+    },
+    updateAllSprites () {
+      for (var row of this.spriteMap) {
+        var xPos = Math.floor(Math.random() * this.w)
+        var yPos = Math.floor(Math.random() * this.h)
+        var xSize = Math.random() * 2
+        var ySize = Math.random() * 2
+        var flipped = true
+        this.updateSprite(row[0], 'explosion', xPos, yPos, xSize, ySize, flipped)
+      }
+    },
+    deleteAllSprites () {
+      for (var row of this.spriteMap) {
+        this.deleteSprite(row[0])
+      }
+    },
+    updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
+      var sprite = this.spriteMap.get(spriteNr)
+      sprite.gotoAndPlay(spriteType)
+      sprite.x = posX
+      sprite.y = posY
+      sprite.scaleX = scaleX
+      sprite.scaleY = scaleY
+      if (flipped === true) {
+        sprite.scaleX = -sprite.scaleX
+      }
+    },
+    deleteSprite (spriteNr) {
+      var sprite = this.spriteMap.get(spriteNr)
+      this.stage.removeChild(sprite)
+      this.spriteMap.delete(spriteNr)
     }
 
   }
