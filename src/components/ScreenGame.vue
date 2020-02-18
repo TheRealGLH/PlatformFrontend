@@ -65,7 +65,8 @@ export default {
           bomb: 43,
           bullet: 44,
           placeholder: 45
-        }
+        },
+        framerate: 14
       }
       this.spritesheet = new cjs.SpriteSheet(data)
     },
@@ -75,7 +76,7 @@ export default {
       this.addSprite(this.debugSpriteCount, 'placeholder', xPos, yPos, 1, 1, false)
       this.debugSpriteCount++
     },
-    showAllSprites() {
+    showAllSprites () {
       this.deleteAllSprites()
       var y = 32
       this.addSprite(this.debugSpriteCount, 'ammo', this.debugSpriteCount * 32, y, 1, 1, false)
@@ -108,7 +109,7 @@ export default {
         var xPos = Math.floor(Math.random() * this.w)
         var yPos = Math.floor(Math.random() * this.h)
         var xSize = Math.random() * 2
-        var ySize = Math.random() * 2
+        // var ySize = Math.random() * 2
         var flipped = Boolean(Math.round(Math.random()))
         this.updateSprite(row[0], 'explosion', xPos, yPos, xSize, xSize, flipped)
       }
@@ -117,7 +118,7 @@ export default {
       for (var row of this.spriteMap) {
         this.deleteSprite(row[0])
       }
-      this.debugSpriteCount = 0;
+      this.debugSpriteCount = 0
     },
     addSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = new cjs.Sprite(this.spritesheet, spriteType)
