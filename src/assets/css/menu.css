@@ -1,12 +1,11 @@
-@import "fonts.css";
 @font-face {
   font-family: 'TF2';
-  src: url(/static/fonts/TF2.ttf) format('truetype');
+  src: url('../fonts/TF2.ttf') format('truetype');
   font-weight: 400;
 }
 @font-face {
   font-family: 'TF2 Professor';
-  src: url(/static/fonts/tf2professor.ttf) format('truetype');
+  src: url('../fonts/tf2professor.ttf') format('truetype');
   font-weight: 400;
 }
 h1, h2 {
@@ -21,20 +20,26 @@ li {
   margin: 0 1%;
 }
 a {
-  color: #42b983;
+  color: #e1737d;
 }
 button {
   border: 0px hidden #1C6EA4;
+  color: #e8e8e7;
+  background-color: #8aa29e;
   font-size: 210%;
   margin: 2%;
   padding: 20px;
   -webkit-border-radius: 15px;
   border-radius: 15px;
   font-family: TF2;
+    -webkit-transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 button:hover {
 -webkit-box-shadow: 0px 0px 6px 5px rgba(0,0,0,0.22);
 box-shadow: 0px 0px 3px 5px rgba(0,0,0,0.22);
+-webkit-transform: scale(1.25, 1.25);
+transform: scale(1.25, 1.25);
 }
 .hello{
 position: absolute;
@@ -46,16 +51,35 @@ transform: translateX(-50%);
   font-family: TF2;
 }
 .inputUserInfo{
-  font-size:30px;
+  font-size:40px;
+  font-size:3vw;
+  font-style: bold;
   margin: 7px;
+  text-indent: 9px;
   border: 0px hidden;
-  background-color:#f7f7f7;
-  color:#2E2F2E;
+  background-color:#edf1f0;
+  color:#576260;
   -webkit-border-radius: 15px;
 border-radius: 15px;
   font-family: TF2 Professor;
+      -webkit-transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.inputUserInfo:focus{
+    -webkit-transform: scale(1.5, 1.5);
+transform: scale(1.5, 1.5);
+}
+.inputUserInfo:focus,.inputUserInfo:hover{
+  background-color:#fff;
 }
 .menuBox{
-	background-color:#fafafa;
-  padding:.2%;
+	background-color:#9fb2af;
+    padding:4px;
+    padding-right:10px;
+  margin: .3%;
+  border-radius:40px;
+  /*
+  width: 110%;
+  height: 110%;
+  */
 }

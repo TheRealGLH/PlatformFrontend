@@ -14,7 +14,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@createjs/easeljs": "^2.0.0-beta.4",
     "git-describe": "^4.0.4",
+    "git-rev-sync": "^2.0.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
@@ -72,7 +74,8 @@
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
-    "webpack-bundle-analyzer": "^2.9.0",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
