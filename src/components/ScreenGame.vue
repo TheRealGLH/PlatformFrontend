@@ -5,9 +5,35 @@
 <!--<canvas id="gamePane" ref="gamePane"></canvas>-->
 <easel-canvas width="800" height="600" :anti-alias="false" id="gamePane">
     <easel-sprite-sheet
-        :images="['images/lastguardian-all.png']"
+        :images="['static/spritesheet.png']"
         :frames="{width:32,height:32}"
         :animations="{
+            ammo: {
+                frames: [0, 2, 3 ,4 ,5 ,6 ,7, 8, 9, 10, 11],
+            },
+            axe: {
+                frames: [12, 13],
+            },
+            explosion: {
+                frames: [14, 15, 16, 17, 18, 19, 20],
+            },
+            grenade: {
+                frames: [21, 22, 23, 24],
+            },
+            platformsolid: 25,
+            platformnonsolid: 26,
+            player: 27,
+            rocket: {
+                frames: [28, 29, 30, 31, 32, 33, 34, 35],
+            },
+            slash: {
+                frames: [36, 37, 38, 39, 40],
+            },
+            slashEnd: 42,
+            swordAttack: [36, 37, 38, 39, 40, 41, 'slashEnd'],
+            bomb: 43,
+            bullet: 44,
+            placeholder: 45,
             stand: 7,
             walk: [6, 7],
             walkAndStand: [6, 7, 'stand'],
@@ -15,15 +41,93 @@
                 frames: [5, 1, 0, 2],
             },
         }"
-        :framerate="4"
+        :framerate="12"
     >
         <easel-sprite
             :x="32"
-            :y="48"
-            animation="stand"
-            align="bottom-left"
+            :y="32"
+            animation="ammo"
+            align="bottom-center"
         >
         </easel-sprite>
+        <easel-sprite
+            :x="64"
+            :y="32"
+            animation="axe"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="96"
+            :y="32"
+            animation="explosion"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="128"
+            :y="32"
+            animation="grenade"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="160"
+            :y="32"
+            animation="platformnonsolid"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="192"
+            :y="32"
+            animation="platformsolid"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="224"
+            :y="32"
+            animation="player"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="256"
+            :y="32"
+            animation="rocket"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="288"
+            :y="32"
+            animation="slash"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="320"
+            :y="32"
+            animation="bomb"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="352"
+            :y="32"
+            animation="bullet"
+            align="bottom-center"
+        >
+        </easel-sprite>
+        <easel-sprite
+            :x="384"
+            :y="32"
+            animation="placeholder"
+            align="bottom-center"
+        >
+        </easel-sprite>
+
     </easel-sprite-sheet>
 </easel-canvas>
 
