@@ -5,8 +5,8 @@
     <transition name="fade">
     <router-view/>
     </transition>
-    <!--<footer class="footer">Current version <b class="version-hash">{{version}}</b></footer>-->
-    <footer class="footer">Current version <b class="version-hash">aa12bb3</b></footer>
+    <footer class="footer">Current version <b class="version-hash">{{version}}</b></footer>
+    <!--<footer class="footer">Current version <b class="version-hash">aa12bb3</b></footer>-->
   </div>
 </template>
 

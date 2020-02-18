@@ -3,7 +3,12 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
+let commitHash = require('child_process')
+  .execSync('git rev-parse --short HEAD')
+  .toString()
+console.log(commitHash)
+process.env.VUE_APP_GIT_HASH = commitHash.toString()
+console.log(process.env.VUE_APP_GIT_HASH)
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
