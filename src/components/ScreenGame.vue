@@ -7,6 +7,7 @@
 <button @click="addTestSprite">Add Sprite</button>
 <button @click="updateAllSprites">Update</button>
 <button @click="deleteAllSprites">Delete</button>
+<button @click="showAllSprites">Show all sprites</button>
   </div>
 </template>
 
@@ -71,7 +72,35 @@ export default {
     addTestSprite () {
       var xPos = Math.floor(Math.random() * this.w)
       var yPos = Math.floor(Math.random() * this.h)
-      this.addSprite(this.debugSpriteCount, 'rocket', xPos, yPos, 1, 1, false)
+      this.addSprite(this.debugSpriteCount, 'placeholder', xPos, yPos, 1, 1, false)
+      this.debugSpriteCount++
+    },
+    showAllSprites() {
+      this.deleteAllSprites()
+      var y = 32
+      this.addSprite(this.debugSpriteCount, 'ammo', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'axe', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'explosion', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'grenade', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'platformsolid', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'platformnonsolid', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'player', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'rocket', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'slash', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'bomb', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'bullet', this.debugSpriteCount * 32, y, 1, 1, false)
+      this.debugSpriteCount++
+      this.addSprite(this.debugSpriteCount, 'placeholder', this.debugSpriteCount * 32, y, 1, 1, false)
       this.debugSpriteCount++
     },
     updateAllSprites () {
@@ -81,13 +110,14 @@ export default {
         var xSize = Math.random() * 2
         var ySize = Math.random() * 2
         var flipped = Boolean(Math.round(Math.random()))
-        this.updateSprite(row[0], 'grenade', xPos, yPos, xSize, ySize, flipped)
+        this.updateSprite(row[0], 'explosion', xPos, yPos, xSize, xSize, flipped)
       }
     },
     deleteAllSprites () {
       for (var row of this.spriteMap) {
         this.deleteSprite(row[0])
       }
+      this.debugSpriteCount = 0;
     },
     addSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = new cjs.Sprite(this.spritesheet, spriteType)
