@@ -3,10 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import createjs from 'createjs'
 
 Vue.config.productionTip = false
-Vue.use(require('vue-easeljs'))
+// Vue.use(require('vue-easeljs'))
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

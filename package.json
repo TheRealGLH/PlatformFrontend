@@ -14,11 +14,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "createjs": "^1.0.1",
+    "@createjs/easeljs": "^2.0.0-beta.4",
     "git-describe": "^4.0.4",
     "git-rev-sync": "^2.0.0",
     "vue": "^2.5.2",
-    "vue-easeljs": "^0.1.13",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

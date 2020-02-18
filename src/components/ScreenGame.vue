@@ -3,13 +3,12 @@
     <h2>{{ msg }}</h2>
 
 <canvas id="gamePane" ref="gamePane"></canvas>
-
+<br/><button @click="addSprite">Add Sprite</button>
   </div>
 </template>
 
 <script>
-// eslint-disable-next-line
-const cjs = 'createjs'
+import * as cjs from '@createjs/easeljs'
 
 export default {
   name: 'HelloWorld',
@@ -19,6 +18,16 @@ export default {
     }
   },
   mounted () {
+    this.stage = new cjs.Stage(this.$refs.gamePane)
+    cjs.Ticker.addEventListener('tick', this.stage)
+  },
+  methods: {
+    addSprite () {
+      var newText = new cjs.Text('Hello World')
+      newText.x = 32
+      newText.y = 32
+      this.stage.addChild(newText)
+    }
 
   }
 }

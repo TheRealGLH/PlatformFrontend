@@ -35,7 +35,7 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      'createjs': path.join(__dirname, 'node_modules', 'createjs', 'builds', '1.0.0', 'createjs.min.js'),
+      //'createjs': path.join(__dirname, 'node_modules', 'createjs', 'builds', '1.0.0', 'createjs.js'),
       '@': resolve('src'),
     }
   },
@@ -75,13 +75,6 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      },
-            {
-        test: /node_modules[/\\]createjs/,
-        loaders: [
-          'imports-loader?this=>window',
-          'exports-loader?window.createjs'
-        ]
       }
     ]
   },
