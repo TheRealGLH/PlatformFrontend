@@ -1,9 +1,32 @@
 <template>
   <div class="hello">
     <h2>{{ msg }}</h2>
-<canvas id="gamePane" ref="gamePane">
 
-</canvas>
+<!--<canvas id="gamePane" ref="gamePane"></canvas>-->
+<easel-canvas width="800" height="600" :anti-alias="false" id="gamePane">
+    <easel-sprite-sheet
+        :images="['images/lastguardian-all.png']"
+        :frames="{width:32,height:32}"
+        :animations="{
+            stand: 7,
+            walk: [6, 7],
+            walkAndStand: [6, 7, 'stand'],
+            confusion: {
+                frames: [5, 1, 0, 2],
+            },
+        }"
+        :framerate="4"
+    >
+        <easel-sprite
+            :x="32"
+            :y="48"
+            animation="stand"
+            align="bottom-left"
+        >
+        </easel-sprite>
+    </easel-sprite-sheet>
+</easel-canvas>
+
   </div>
 </template>
 
@@ -16,14 +39,15 @@ export default {
     }
   },
   mounted () {
+  /*
     var img = document.createElement('img')
     var img2 = document.createElement('img')
     var canvas = document.createElement('canvas')
     canvas = this.$refs.gamePane
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
 
-    img.src = require('../assets/sprites/platformplayer.png')
-    img2.src = require('../assets/sprites/rocket.gif')
+    img.src = require('../assets/sprites/spritesheet.png')
+    img2.src = require('../assets/sprites/spritesheet.png')
     img.onload = function (a) {
       // var h = a.target.height
       // var w = a.target.width
@@ -39,6 +63,7 @@ export default {
       var c = canvas.getContext('2d')
       c.drawImage(img2, 32, 0)
     }
+    */
   }
 }
 
