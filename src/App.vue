@@ -5,8 +5,8 @@
     <transition name="fade">
     <router-view/>
     </transition>
-    <footer class="footer">Current version <b class="version-hash">{{version}}</b></footer>
-    <!--<footer class="footer">Current version <b class="version-hash">aa12bb3</b></footer>-->
+    <footer class="footer">Current version <a :href="gitUrl" class="version-hash">{{version}}</a></footer>
+
   </div>
 </template>
 
@@ -15,8 +15,14 @@ export default {
   name: 'App',
   data () {
     return {
-      version: process.env.VUE_APP_GIT_HASH
+    // eslint-disable-next-line
+      version: GITHASH,
+      // eslint-disable-next-line
+      gitUrl: 'https://github.com/TheRealGLH/PlatformFrontend/commit/' + GITHASH
     }
+  },
+  mounted () {
+    // console.log(process.env.VUE_APP_GIT_HASH)
   }
 }
 </script>
@@ -24,6 +30,9 @@ export default {
 <style>
 body{
  background-color: #f6f8f7;
+}
+a{
+ font-weight: bold;
 }
 @font-face {
   font-family: 'TF2 Bold';
@@ -58,7 +67,7 @@ h1{
 .fade-enter-active, .fade-leave-active {
   transition: opacity .4s
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to{
   opacity: 0
 }
 </style>
