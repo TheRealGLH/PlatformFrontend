@@ -14,6 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "createjs": "^1.0.1",
     "git-describe": "^4.0.4",
     "git-rev-sync": "^2.0.0",
     "vue": "^2.5.2",
