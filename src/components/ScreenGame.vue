@@ -4,7 +4,8 @@
 
 <canvas id="gamePane" ref="gamePane" :width="w" :height="h"></canvas>
 <br/>
-<button @click="addTestSprite">Add Sprite</button>
+Sprite debug:<br/>
+<button @click="addTestSprite">Create</button>
 <button @click="updateAllSprites">Update</button>
 <button @click="deleteAllSprites">Delete</button>
 <button @click="showAllSprites">Show all sprites</button>
@@ -31,6 +32,13 @@ export default {
     this.init()
     this.stage = new cjs.Stage(this.$refs.gamePane)
     cjs.Ticker.addEventListener('tick', this.stage)
+    var amount = Math.floor(Math.random() * 35)
+    for (var i = 0; i < amount; i++) {
+      var xPos = Math.floor(Math.random() * this.w)
+      var yPos = Math.floor(Math.random() * (this.h / 3))
+      var xSize = Math.random() * 2
+      this.addBackgroundSprite('star', xPos, yPos, xSize, xSize)
+    }
   },
   methods: {
     init () {
@@ -40,13 +48,13 @@ export default {
         frames: {width: 32, height: 32},
         animations: {
           ammo: {
-            frames: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
           },
           axe: {
             frames: [12, 13]
           },
           explosion: {
-            frames: [14, 15, 16, 17, 18, 19, 20]
+            frames: [14, 15, 16, 17, 18, 19, 20, 19, 17, 16, 15, 14]
           },
           grenade: {
             frames: [21, 22, 23, 24]
@@ -68,6 +76,17 @@ export default {
         },
         framerate: 14
       }
+      var backgrounddata = {
+        images: ['static/spritesheetbackground.png'],
+        frames: {width: 16, height: 16},
+        animations: {
+          star: {
+            frames: [0, 1, 2, 3, 4]
+          }
+        },
+        framerate: 4
+      }
+      this.backgroundspritesheet = new cjs.SpriteSheet(backgrounddata)
       this.spritesheet = new cjs.SpriteSheet(data)
     },
     addTestSprite () {
@@ -78,31 +97,11 @@ export default {
     },
     showAllSprites () {
       this.deleteAllSprites()
-      var y = 32
-      this.addSprite(this.debugSpriteCount, 'ammo', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'axe', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'explosion', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'grenade', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'platformsolid', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'platformnonsolid', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'player', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'rocket', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'slash', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'bomb', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'bullet', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
-      this.addSprite(this.debugSpriteCount, 'placeholder', this.debugSpriteCount * 32, y, 1, 1, false)
-      this.debugSpriteCount++
+      var y = 0
+      for (const animation of this.spritesheet.animations) {
+        this.addSprite(this.debugSpriteCount, animation, this.debugSpriteCount * 32, y, 1, 1, false)
+        this.debugSpriteCount++
+      }
     },
     updateAllSprites () {
       for (var row of this.spriteMap) {
@@ -119,6 +118,17 @@ export default {
         this.deleteSprite(row[0])
       }
       this.debugSpriteCount = 0
+    },
+    addBackgroundSprite (spriteType, posX, posY, scaleX, scaleY) {
+      var sprite = new cjs.Sprite(this.backgroundspritesheet, spriteType)
+      var frames = this.backgroundspritesheet.getNumFrames(spriteType) - 1
+      var startFrame = Math.floor(Math.random() * frames)
+      sprite.gotoAndPlay(startFrame)
+      sprite.x = posX
+      sprite.y = posY
+      sprite.scaleX = scaleX
+      sprite.scaleY = scaleY
+      this.stage.addChild(sprite)
     },
     addSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = new cjs.Sprite(this.spritesheet, spriteType)

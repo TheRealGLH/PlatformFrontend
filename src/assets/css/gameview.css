@@ -1,3 +1,6 @@
 #gamePane{
-  background: #5088A0 url('../img/background.png') repeat-x scroll 50% 100%;
+  background: #5088A0; 
+  background-image: url('../img/backgroundTop.png'), url('../img/background.png');
+  background-position: 0 0, 0 bottom;
+  background-repeat: repeat-x, repeat-x;
 }
