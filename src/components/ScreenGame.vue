@@ -8,7 +8,7 @@ Sprite debug:<br/>
 <button @click="addTestSprite">Create</button>
 <button @click="updateAllSprites">Update</button>
 <button @click="deleteAllSprites">Delete</button>
-<button @click="showAllSprites">Show all sprites</button>
+<button @click="showAllSprites">Show all animations</button>
   </div>
 </template>
 
