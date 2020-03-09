@@ -5,15 +5,15 @@
       <div class="menuBox">
 <ul>
 <li>
-<input placeholder="User name" id="LoginUserName" class="inputUserInfo"/>
+<input placeholder="User name" id="LoginUserName" class="inputUserInfo" v-model="loginUserName"/>
 </li>
 
 <li>
-<input placeholder="Password" type="password" id="LoginPassword" class="inputUserInfo"/>
+<input placeholder="Password" type="password" id="LoginPassword" class="inputUserInfo" v-model="loginPassword"/>
 </li>
 
 <li>
-<button id="LoginSubmit">Log in</button>
+<button id="LoginSubmit" @click="sendLogin">Log in</button>
 </li>
 </ul>
 </div>
@@ -24,11 +24,30 @@
 </template>
 
 <script>
+import basket from '../resources/websocket-store'
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Log in.'
+    }
+  },
+  computed: {
+    messageType () {
+      return basket.state.messageType
+      // Or return basket.getters.fruitsCount
+      // (depends on your design decisions).
+    }
+  },
+  watch: {
+    messageType (newType, oldType) {
+      // Our fancy notification (2).
+      console.log(`Received messagetype ${newType}.`)
+    }
+  },
+  methods: {
+    sendLogin () {
+      basket.commit('sendMessage', '{ messageType: \'Login\', name: ' + this.loginUserName + ', password: ' + this.loginPassword + ' }')
     }
   }
 }
