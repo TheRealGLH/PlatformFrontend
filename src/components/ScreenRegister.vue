@@ -3,20 +3,20 @@
     <h2>{{ msg }}</h2>
       <div class="menu">
       <div class="menuBox">
-<ul>
-<li>
+<ul class="menuList">
+<li class="menuListItem">
 <input placeholder="User name" id="RegisterUserName" class="inputUserInfo"/>
 </li>
 
-<li>
+<li class="menuListItem">
 <input placeholder="Password" type="password" id="RegisterPassword" class="inputUserInfo"/>
 </li>
 
-<li>
+<li class="menuListItem">
 <input placeholder="Confirm" type="password" id="RegisterPasswordConfirm" class="inputUserInfo"/>
 </li>
 
-<li>
+<li class="menuListItem">
 <button id="RegisterSubmit">Register</button>
 </li>
 </ul>

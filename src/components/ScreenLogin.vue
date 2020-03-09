@@ -3,16 +3,16 @@
     <h2>{{ msg }}</h2>
       <div class="menu">
       <div class="menuBox">
-<ul>
-<li>
+<ul class="menuList">
+<li class="menuListItem">
 <input placeholder="User name" id="LoginUserName" class="inputUserInfo" v-model="loginUserName"/>
 </li>
 
-<li>
+<li class="menuListItem">
 <input placeholder="Password" type="password" id="LoginPassword" class="inputUserInfo" v-model="loginPassword"/>
 </li>
 
-<li>
+<li class="menuListItem">
 <button id="LoginSubmit" @click="sendLogin">Log in</button>
 </li>
 </ul>
