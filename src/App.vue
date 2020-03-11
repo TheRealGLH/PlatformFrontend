@@ -5,7 +5,7 @@
     <transition name="fade">
     <router-view/>
     </transition>
-    <footer class="footer">Current version <a :href="gitUrl" class="version-hash">{{version}}</a></footer>
+    <footer class="footer">Current version <a :href="gitUrl" class="version-hash" target="_blank">{{version}}</a>. Git history: <a href="https://i322496.hera.fhict.nl/platformupdates" class="version-hash" target="_blank">**</a></footer>
 
   </div>
 </template>

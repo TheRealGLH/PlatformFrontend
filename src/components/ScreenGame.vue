@@ -8,7 +8,7 @@ Sprite debug:<br/>
 <button @click="addTestSprite">Create</button>
 <button @click="updateAllSprites">Update</button>
 <button @click="deleteAllSprites">Delete</button>
-<button @click="showAllSprites">Show all sprites</button>
+<button @click="showAllSprites">Show all animations</button>
   </div>
 </template>
 
@@ -92,7 +92,7 @@ export default {
     addTestSprite () {
       var xPos = Math.floor(Math.random() * this.w)
       var yPos = Math.floor(Math.random() * this.h)
-      this.addSprite(this.debugSpriteCount, 'placeholder', xPos, yPos, 1, 1, false)
+      this.addSprite(this.debugSpriteCount, 'grenade', xPos, yPos, 1, 1, false)
       this.debugSpriteCount++
     },
     showAllSprites () {
@@ -110,7 +110,7 @@ export default {
         var xSize = Math.random() * 2
         // var ySize = Math.random() * 2
         var flipped = Boolean(Math.round(Math.random()))
-        this.updateSprite(row[0], 'explosion', xPos, yPos, xSize, xSize, flipped)
+        this.updateSprite(row[0], 'rocket', xPos, yPos, xSize, xSize, flipped)
       }
     },
     deleteAllSprites () {

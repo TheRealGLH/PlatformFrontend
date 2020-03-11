@@ -11,11 +11,11 @@
 h1, h2 {
   font-weight: normal;
 }
-ul {
+.menuList {
   list-style-type: none;
   padding: 0;
 }
-li {
+.menuListItem {
   //display: inline-block;
   margin: 0 1%;
 }
@@ -82,4 +82,13 @@ transform: scale(1.5, 1.5);
   width: 110%;
   height: 110%;
   */
+}
+.errorBox{
+  background-color: red;
+border-radius: 10px;
+font-weight: bold;  
+}
+img#lobbyMapPreview {
+  -webkit-transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);   
 }

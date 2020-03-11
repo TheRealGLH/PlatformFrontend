@@ -3,17 +3,20 @@
     <h2>{{ msg }}</h2>
       <div class="menu">
       <div class="menuBox">
-<ul>
-<li>
-<input placeholder="User name" id="LoginUserName" class="inputUserInfo"/>
+<ul class="menuList">
+<li class="menuListItem">
+<div class="errorBox" id="loginErrorBox" v-if="visible"><img src="static/favicon.png"/>{{loginMsgCurrentText}}</div>
+</li>
+<li class="menuListItem">
+<input placeholder="User name" id="LoginUserName" class="inputUserInfo" v-model="loginUserName"/>
 </li>
 
-<li>
-<input placeholder="Password" type="password" id="LoginPassword" class="inputUserInfo"/>
+<li class="menuListItem">
+<input placeholder="Password" type="password" id="LoginPassword" class="inputUserInfo" v-model="loginPassword"/>
 </li>
 
-<li>
-<button id="LoginSubmit">Log in</button>
+<li class="menuListItem">
+<button id="LoginSubmit" @click="sendLogin">Log in</button>
 </li>
 </ul>
 </div>
@@ -24,11 +27,60 @@
 </template>
 
 <script>
+import websocketStore from '../resources/websocket-store'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Log in.'
+      visible: false,
+      msg: 'Log in.',
+      loginMsgCurrentText: 'Insert Error message here',
+      loginMsgError: 'There was an error with our login service, try again later',
+      loginMsgIncorrect: 'Incorrect user credentials supplied',
+      loginMsgBanned: 'You are currently banned from playing'
+    }
+  },
+  computed: {
+    messageContent () {
+      return websocketStore.state.messageContent
+    }
+  },
+  watch: {
+    messageContent (newType, oldType) {
+      if (newType !== '') {
+        var parsed = JSON.parse(newType)
+        if (parsed.responseMessageType === 'LoginState') {
+          if (parsed.loginState === 'SUCCESS') {
+            this.$router.push('/lobby')
+          } else {
+            var errorText = ''
+            switch (parsed.loginState) {
+              case 'INCORRECTDATA':
+                errorText = this.loginMsgIncorrect
+                break
+              case 'BANNED':
+                errorText = this.loginMsgBanned
+                break
+              case 'ERROR':
+                errorText = this.loginMsgError
+                break
+              default:
+                errorText = 'unknown login response type: ' + parsed.loginState
+                break
+            }
+            this.showErrorMessage(errorText)
+          }
+        }
+      }
+    }
+  },
+  methods: {
+    showErrorMessage (text) {
+      this.loginMsgCurrentText = text
+      this.visible = true
+    },
+    sendLogin () {
+      websocketStore.commit('sendMessage', '{ messageType: \'Login\', name: ' + this.loginUserName + ', password: ' + this.loginPassword + ' }')
     }
   }
 }
