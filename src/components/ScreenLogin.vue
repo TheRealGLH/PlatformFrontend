@@ -17,7 +17,7 @@
 </li>
 
 <li class="menuListItem">
-<button id="LoginSubmit" @click="sendLogin">Log in</button>
+<button id="LoginSubmit" @click="sendLogin" :disabled="loginButtonDisabled">Log in</button>
 </li>
 <li class="menuListItem">
 <img src="static/loading.gif" id="loadingCircle" width="32px" :style="loadingVisible" />
@@ -42,9 +42,11 @@ export default {
       invisibleTagProp: 'display: none;',
       errorVisible: 'display: none;',
       loadingVisible: 'display: none;',
+      loginButtonDisabled: false,
       msg: 'Log in.',
       loginMsgCurrentText: 'Insert Error message here',
-      loginMsgError: 'There was an error with our login service, try again later',
+      loginMsgFillIn: 'Please fill in BOTH fields',
+      loginMsgError: 'Error login in. Try again later.',
       loginMsgIncorrect: 'Incorrect user credentials supplied',
       loginMsgBanned: 'You are currently banned from playing'
     }
@@ -60,6 +62,7 @@ export default {
         var parsed = JSON.parse(newType)
         if (parsed.responseMessageType === 'LoginState') {
           this.loadingVisible = this.invisibleTagProp
+          this.loginButtonDisabled = false
           if (parsed.loginState === 'SUCCESS') {
             this.$router.push('/lobby')
           } else {
@@ -90,8 +93,14 @@ export default {
       this.errorVisible = this.visibleTagProp
     },
     sendLogin () {
-      this.loadingVisible = this.visibleTagProp
-      websocketStore.commit('sendMessage', '{ messageType: \'Login\', name: ' + this.loginUserName + ', password: ' + this.loginPassword + ' }')
+      this.errorVisible = this.invisibleTagProp
+      if (this.loginUserName && this.loginPassword) {
+        this.loadingVisible = this.visibleTagProp
+        this.loginButtonDisabled = true
+        websocketStore.commit('sendMessage', '{ messageType: \'Login\', name: ' + this.loginUserName + ', password: ' + this.loginPassword + ' }')
+      } else {
+        this.showErrorMessage(this.loginMsgFillIn)
+      }
     }
   }
 }

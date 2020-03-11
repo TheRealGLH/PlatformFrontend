@@ -11,6 +11,7 @@
 
 Select map:
  <select id="maps" @change="onMapChange($event)">
+  <option value="placeholder" disabled>Select a map</option>
   <option value="2fort">2fort</option>
   <option value="battlefield">battlefield</option>
   <option value="de_dust2">de_dust2</option>
