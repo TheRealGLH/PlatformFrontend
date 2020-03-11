@@ -2,10 +2,11 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
       <div class="menu">
+      <transition>
       <div class="menuBox">
 <ul class="menuList">
 <li class="menuListItem">
-<div class="errorBox" id="loginErrorBox" v-if="visible"><img src="static/favicon.png"/>{{loginMsgCurrentText}}</div>
+<div class="errorBox" id="loginErrorBox" :style="errorVisible"><!--<img src="static/favicon.png"/>--> ⚠️ {{loginMsgCurrentText}}</div>
 </li>
 <li class="menuListItem">
 <input placeholder="User name" id="LoginUserName" class="inputUserInfo" v-model="loginUserName"/>
@@ -18,11 +19,16 @@
 <li class="menuListItem">
 <button id="LoginSubmit" @click="sendLogin">Log in</button>
 </li>
+<li class="menuListItem">
+<img src="static/loading.gif" id="loadingCircle" width="32px" :style="loadingVisible" />
+</li>
 </ul>
 </div>
+  </transition>
 <router-link to="/"><button>Back</button></router-link>
 
   </div>
+
   </div>
 </template>
 
@@ -32,7 +38,10 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      visible: false,
+      visibleTagProp: 'display: inline-block;',
+      invisibleTagProp: 'display: none;',
+      errorVisible: 'display: none;',
+      loadingVisible: 'display: none;',
       msg: 'Log in.',
       loginMsgCurrentText: 'Insert Error message here',
       loginMsgError: 'There was an error with our login service, try again later',
@@ -50,6 +59,7 @@ export default {
       if (newType !== '') {
         var parsed = JSON.parse(newType)
         if (parsed.responseMessageType === 'LoginState') {
+          this.loadingVisible = this.invisibleTagProp
           if (parsed.loginState === 'SUCCESS') {
             this.$router.push('/lobby')
           } else {
@@ -77,9 +87,10 @@ export default {
   methods: {
     showErrorMessage (text) {
       this.loginMsgCurrentText = text
-      this.visible = true
+      this.errorVisible = this.visibleTagProp
     },
     sendLogin () {
+      this.loadingVisible = this.visibleTagProp
       websocketStore.commit('sendMessage', '{ messageType: \'Login\', name: ' + this.loginUserName + ', password: ' + this.loginPassword + ' }')
     }
   }

@@ -78,15 +78,22 @@ transform: scale(1.5, 1.5);
     padding-right:10px;
   margin: .3%;
   border-radius:40px;
+    transition: all .5s linear;
   /*
   width: 110%;
   height: 110%;
   */
 }
 .errorBox{
-  background-color: red;
-border-radius: 10px;
-font-weight: bold;  
+    display: inline-block;
+  background-color: #c88c8b;
+  border-radius: 10px;
+  font-weight: bold;
+color: #704f4f;
+padding: 10px 0;  
+//font-size:1.5vw;
+width: 200%;
+max-width: 100%;
 }
 img#lobbyMapPreview {
   -webkit-transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
