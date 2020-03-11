@@ -5,6 +5,9 @@
       <div class="menuBox">
 <ul class="menuList">
 <li class="menuListItem">
+<div class="errorBox" id="loginErrorBox" v-if="visible"><img src="static/favicon.png"/>{{loginMsgCurrentText}}</div>
+</li>
+<li class="menuListItem">
 <input placeholder="User name" id="LoginUserName" class="inputUserInfo" v-model="loginUserName"/>
 </li>
 
@@ -24,30 +27,60 @@
 </template>
 
 <script>
-import basket from '../resources/websocket-store'
+import websocketStore from '../resources/websocket-store'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Log in.'
+      visible: false,
+      msg: 'Log in.',
+      loginMsgCurrentText: 'Insert Error message here',
+      loginMsgError: 'There was an error with our login service, try again later',
+      loginMsgIncorrect: 'Incorrect user credentials supplied',
+      loginMsgBanned: 'You are currently banned from playing'
     }
   },
   computed: {
-    messageType () {
-      return basket.state.messageType
-      // Or return basket.getters.fruitsCount
-      // (depends on your design decisions).
+    messageContent () {
+      return websocketStore.state.messageContent
     }
   },
   watch: {
-    messageType (newType, oldType) {
-      // Our fancy notification (2).
-      console.log(`Received messagetype ${newType}.`)
+    messageContent (newType, oldType) {
+      if (newType !== '') {
+        var parsed = JSON.parse(newType)
+        if (parsed.responseMessageType === 'LoginState') {
+          if (parsed.loginState === 'SUCCESS') {
+            this.$router.push('/lobby')
+          } else {
+            var errorText = ''
+            switch (parsed.loginState) {
+              case 'INCORRECTDATA':
+                errorText = this.loginMsgIncorrect
+                break
+              case 'BANNED':
+                errorText = this.loginMsgBanned
+                break
+              case 'ERROR':
+                errorText = this.loginMsgError
+                break
+              default:
+                errorText = 'unknown login response type: ' + parsed.loginState
+                break
+            }
+            this.showErrorMessage(errorText)
+          }
+        }
+      }
     }
   },
   methods: {
+    showErrorMessage (text) {
+      this.loginMsgCurrentText = text
+      this.visible = true
+    },
     sendLogin () {
-      basket.commit('sendMessage', '{ messageType: \'Login\', name: ' + this.loginUserName + ', password: ' + this.loginPassword + ' }')
+      websocketStore.commit('sendMessage', '{ messageType: \'Login\', name: ' + this.loginUserName + ', password: ' + this.loginPassword + ' }')
     }
   }
 }

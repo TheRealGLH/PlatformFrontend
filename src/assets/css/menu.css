@@ -83,7 +83,12 @@ transform: scale(1.5, 1.5);
   height: 110%;
   */
 }
-#lobbyMapPreview {
+.errorBox{
+  background-color: red;
+border-radius: 10px;
+font-weight: bold;  
+}
+img#lobbyMapPreview {
   -webkit-transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
   transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);   
 }

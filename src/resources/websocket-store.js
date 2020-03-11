@@ -5,7 +5,8 @@ Vue.use(Vuex)
 // TODO make this url configurable and set it on webpack build as an envir var
 var ws = new WebSocket('ws://localhost:8095/platform/')
 ws.onmessage = function (evt) {
-  alert('Message: ' + evt.data)
+  websocketStore.state.messageContent = evt.data
+  // websocketStore.state.messageContent = ''
   // TODO send this shit to the store and make the store react properly
 }
 ws.onclose = function () {
@@ -17,11 +18,12 @@ ws.onerror = function (err) {
   alert('Error connecting to the server: ' + err)
   // TODO make the page respond to this... Perhaps remove the template from the page?
 }
-const basket = new Vuex.Store({
+const websocketStore = new Vuex.Store({
   state: {
     // these are the RECEIVED messages, we don't store our sent messages locally
     messageType: '',
-    messageContent: ''
+    messageContent: '',
+    loggedIn: false
   },
   getters: {
     messageType (state) {
@@ -36,8 +38,6 @@ const basket = new Vuex.Store({
       ws.send(json)
     }
   }
-  // Obvously you would need some mutations and actions,
-  // but to make example cleaner I'll skip this part.
 })
 
-export default basket
+export default websocketStore
