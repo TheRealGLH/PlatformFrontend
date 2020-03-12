@@ -122,3 +122,6 @@ img#lobbyMapPreview {
   -webkit-transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
   transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);   
 }
+svg path, svg rect {
+ fill: #627370;   
+}
