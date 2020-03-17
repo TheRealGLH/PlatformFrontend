@@ -35,11 +35,21 @@ button {
     -webkit-transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-button:hover {
+button:hover, button:focus {
 -webkit-box-shadow: 0px 0px 6px 5px rgba(0,0,0,0.22);
 box-shadow: 0px 0px 3px 5px rgba(0,0,0,0.22);
 -webkit-transform: scale(1.25, 1.25);
 transform: scale(1.25, 1.25);
+}
+button:disabled, button:active {
+  color: #878786;
+  background-color: #52615e;
+}
+button:hover:disabled, button:focus:disabled {
+  -webkit-box-shadow: 0px, 0px, 0px, 0px;
+  box-shadow: 0px, 0px, 0px, 0px;
+  -webkit-transform: scale(1,1);
+  transform: scale(1,1);
 }
 .hello{
 position: absolute;
@@ -78,17 +88,40 @@ transform: scale(1.5, 1.5);
     padding-right:10px;
   margin: .3%;
   border-radius:40px;
+    transition: all .5s linear;
   /*
   width: 110%;
   height: 110%;
   */
 }
+select {
+    background-color:#edf1f0;
+  color:#576260;
+  -webkit-border-radius: 15px;
+border-radius: 15px;
+  font-family: TF2 Professor;
+  font-size: 2vw;
+    border: 0px hidden;
+}
+select option:disabled {
+  color:#678280;
+  font-style: italic;  
+}
 .errorBox{
-  background-color: red;
-border-radius: 10px;
-font-weight: bold;  
+    display: inline-block;
+  background-color: #c88c8b;
+  border-radius: 10px;
+  font-weight: bold;
+color: #704f4f;
+padding: 10px 0;  
+//font-size:1.5vw;
+width: 200%;
+max-width: 100%;
 }
 img#lobbyMapPreview {
   -webkit-transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
   transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);   
+}
+svg path, svg rect {
+ fill: #627370;   
 }
