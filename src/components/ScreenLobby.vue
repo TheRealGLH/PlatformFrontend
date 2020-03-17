@@ -11,12 +11,6 @@
 Select map:
  <select id="maps" @change="onMapChange($event)">
   <option value="placeholder" disabled>Select a map</option>
-  <!--
-  <option value="2fort">2fort</option>
-  <option value="battlefield">battlefield</option>
-  <option value="de_dust2">de_dust2</option>
-  <option value="aswdgwegwg">This map has no preview</option>
-  -->
   <option v-for="map in maps" :value="map">{{ map }}</option>
 </select>
 
@@ -66,7 +60,7 @@ export default {
         } else if (parsed.responseMessageType === 'LobbyMapList') {
           this.maps = parsed.mapNames
         } else if (parsed.responseMessageType === 'LobbyMapChange') {
-          this.mapName = parsed.mapName
+          this.setMapInfo(parsed.mapName)
         }
       }
     }
@@ -96,6 +90,10 @@ export default {
     // Events
     onMapChange (event) {
       this.setMapInfo(event.target.value)
+      this.sendMapChoice(event.target.value)
+    },
+    sendMapChoice (mapName) {
+      websocketStore.commit('sendMessage', '{ messageType: \'MapChange\', mapName: ' + mapName + ' }')
     },
     // Test methods
     testMapSwitch () {
