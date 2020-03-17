@@ -11,10 +11,13 @@
 Select map:
  <select id="maps" @change="onMapChange($event)">
   <option value="placeholder" disabled>Select a map</option>
+  <!--
   <option value="2fort">2fort</option>
   <option value="battlefield">battlefield</option>
   <option value="de_dust2">de_dust2</option>
   <option value="aswdgwegwg">This map has no preview</option>
+  -->
+  <option v-for="map in maps" :value="map">{{ map }}</option>
 </select>
 
 <h3>Current map: {{ mapName }}</h3>
@@ -31,6 +34,7 @@ Select map:
 </template>
 
 <script>
+import websocketStore from '../resources/websocket-store'
 export default {
   name: 'ScreenLobby',
   data () {
@@ -38,11 +42,33 @@ export default {
       msg: 'In lobby',
       players: [],
       player: {name: '', number: 0},
+      maps: [],
       mapName: '%mapname%',
       mapPreviewDirectory: 'static/mappreview/',
       mapPreviewURL: 'static/mappreview/none.png',
       previewWidth: 300,
       previewHeight: 225
+    }
+  },
+  computed: {
+    messageContent () {
+      return websocketStore.state.messageContent
+    }
+  },
+  watch: {
+    messageContent (newType, oldType) {
+      if (newType !== '') {
+        var parsed = JSON.parse(newType)
+        if (parsed.responseMessageType === 'LobbyNameChange') {
+          // alert(parsed.names)
+          this.clearPlayers()
+          parsed.names.forEach(name => this.addPlayer(name))
+        } else if (parsed.responseMessageType === 'LobbyMapList') {
+          this.maps = parsed.mapNames
+        } else if (parsed.responseMessageType === 'LobbyMapChange') {
+          this.mapName = parsed.mapName
+        }
+      }
     }
   },
   mounted: function () {
