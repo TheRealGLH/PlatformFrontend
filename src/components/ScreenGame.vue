@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h2>{{ msg }}</h2>
-
+<p> Most recent update: {{ recentMessage }} </p>
 <canvas id="gamePane" ref="gamePane" :width="w" :height="h"></canvas>
 <br/>
 Sprite debug:<br/>
@@ -14,7 +14,7 @@ Sprite debug:<br/>
 
 <script>
 import * as cjs from '@createjs/easeljs'
-
+import websocketStore from '../resources/websocket-store'
 export default {
   name: 'HelloWorld',
   data () {
@@ -22,11 +22,26 @@ export default {
       msg: 'In game...',
       w: 800,
       h: 600,
-      debugSpriteCount: 0
+      debugSpriteCount: 0,
+      spriteMap: new Map(),
+      recentMessage: ''
     }
   },
-  props: {
-    // spritesheet: Object
+  computed: {
+    messageContent () {
+      return websocketStore.state.messageContent
+    }
+  },
+  watch: {
+    messageContent (newType, oldType) {
+      if (newType!== ''){
+        var parsed = JSON.parse(newType)
+        if (parsed.responseMessageType === 'SpriteUpdate') {
+          this.recentMessage = newType
+          parsed.spriteUpdates.forEach(spriteUpdate => this.handleSpriteUpdate(spriteUpdate))
+        }
+      }
+    }
   },
   mounted () {
     this.init()
@@ -42,7 +57,6 @@ export default {
   },
   methods: {
     init () {
-      this.spriteMap = new Map()
       var data = {
         images: ['static/spritesheet.png'],
         frames: {width: 32, height: 32},
@@ -130,6 +144,21 @@ export default {
       sprite.scaleY = scaleY
       this.stage.addChild(sprite)
     },
+    handleSpriteUpdate(spriteUpdate) {
+      switch(spriteUpdate.updateType) {
+            case 'MOVE':
+              this.updateSprite(spriteUpdate.objectNr, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
+            break;
+            case 'CREATE':
+              this.addSprite(spriteUpdate.objectNr, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
+            break;            
+            case 'DESTROY':
+              this.deleteSprite(spriteUpdate.objectNr)
+            break;
+            default:
+              console.log('Unknown spriteUpdate type: ' + spriteUpdate.updateType)
+      } 
+    },
     addSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = new cjs.Sprite(this.spritesheet, spriteType)
       sprite.x = posX
@@ -144,13 +173,17 @@ export default {
     },
     updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = this.spriteMap.get(spriteNr)
-      sprite.gotoAndPlay(spriteType)
-      sprite.x = posX
-      sprite.y = posY
-      sprite.scaleX = scaleX
-      sprite.scaleY = scaleY
-      if (flipped === true) {
-        sprite.scaleX = -sprite.scaleX
+      if (typeof(sprite) === "undefined"){
+        this.addSprite(spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped)
+      } else{
+        sprite.gotoAndPlay(spriteType)
+        sprite.x = posX
+        sprite.y = posY
+        sprite.scaleX = scaleX
+        sprite.scaleY = scaleY
+        if (flipped === true) {
+          sprite.scaleX = -sprite.scaleX
+      }
       }
     },
     deleteSprite (spriteNr) {
