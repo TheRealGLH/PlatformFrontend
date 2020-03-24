@@ -61,32 +61,32 @@ export default {
         images: ['static/spritesheet.png'],
         frames: {width: 32, height: 32},
         animations: {
-          ammo: {
+          WEAPONPICKUP: {
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
           },
-          axe: {
+          AXE: {
             frames: [12, 13]
           },
-          explosion: {
+          PROJECTILEBOMBEXPLODE: {
             frames: [14, 15, 16, 17, 18, 19, 20, 19, 17, 16, 15, 14]
           },
-          grenade: {
+          PROJECTILEBOMB: {
             frames: [21, 22, 23, 24]
           },
-          platformsolid: 25,
-          platformnonsolid: 26,
-          player: 27,
-          rocket: {
+          PLATFORM: 25,
+          UNSOLIDPLATFORM: 26,
+          PLAYER: 27,
+          PROJECTILEROCKET: {
             frames: [28, 29, 30, 31, 32, 33, 34, 35]
           },
           slash: {
             frames: [36, 37, 38, 39, 40]
           },
           slashEnd: 42,
-          swordAttack: [36, 37, 38, 39, 40, 41, 'slashEnd'],
-          bomb: 43,
-          bullet: 44,
-          placeholder: 45
+          PROJECTILESWORD: [36, 37, 38, 39, 40, 41, 'slashEnd'],
+          PROJECTILEBOMB: 43,
+          PROJECTILEBULLET: 44,
+          NONE: 45
         },
         framerate: 14
       }
@@ -106,7 +106,7 @@ export default {
     addTestSprite () {
       var xPos = Math.floor(Math.random() * this.w)
       var yPos = Math.floor(Math.random() * this.h)
-      this.addSprite(this.debugSpriteCount, 'grenade', xPos, yPos, 1, 1, false)
+      this.addSprite(this.debugSpriteCount, 'PROJECTILEBOMB', xPos, yPos, 1, 1, false)
       this.debugSpriteCount++
     },
     showAllSprites () {
@@ -124,7 +124,7 @@ export default {
         var xSize = Math.random() * 2
         // var ySize = Math.random() * 2
         var flipped = Boolean(Math.round(Math.random()))
-        this.updateSprite(row[0], 'rocket', xPos, yPos, xSize, xSize, flipped)
+        this.updateSprite(row[0], 'PROJECTILEROCKET', xPos, yPos, xSize, xSize, flipped)
       }
     },
     deleteAllSprites () {
@@ -147,10 +147,10 @@ export default {
     handleSpriteUpdate(spriteUpdate) {
       switch(spriteUpdate.updateType) {
             case 'MOVE':
-              this.updateSprite(spriteUpdate.objectNr, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
+              this.updateSprite(spriteUpdate.objectNr, spriteUpdate.spriteType, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
             break;
             case 'CREATE':
-              this.addSprite(spriteUpdate.objectNr, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
+              this.addSprite(spriteUpdate.objectNr, spriteUpdate.spriteType, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
             break;            
             case 'DESTROY':
               this.deleteSprite(spriteUpdate.objectNr)
@@ -169,21 +169,18 @@ export default {
         sprite.scaleX = -sprite.scaleX
       }
       this.stage.addChild(sprite)
-      this.spriteMap.set(this.debugSpriteCount, sprite)
+      this.spriteMap.set(spriteNr, sprite)
+      alert('added ' +sprite)
     },
     updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = this.spriteMap.get(spriteNr)
-      if (typeof(sprite) === "undefined"){
-        this.addSprite(spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped)
-      } else{
-        sprite.gotoAndPlay(spriteType)
-        sprite.x = posX
-        sprite.y = posY
-        sprite.scaleX = scaleX
-        sprite.scaleY = scaleY
-        if (flipped === true) {
-          sprite.scaleX = -sprite.scaleX
-      }
+      sprite.gotoAndPlay(spriteType)
+      sprite.x = posX
+      sprite.y = posY
+      sprite.scaleX = scaleX
+      sprite.scaleY = scaleY
+      if (flipped === true) {
+        sprite.scaleX = -sprite.scaleX
       }
     },
     deleteSprite (spriteNr) {
