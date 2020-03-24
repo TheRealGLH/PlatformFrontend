@@ -21,8 +21,8 @@ export default {
       spriteSize: 32,
       spriteScaleFactor: '',
       spriteMap: new Map(),
-      textFont: "14px Consolas",
-      textColor: "#000000",
+      textFont: '14px Consolas',
+      textColor: '#000000',
       labelMap: new Map()
     }
   },
@@ -33,7 +33,7 @@ export default {
   },
   watch: {
     messageContent (newType, oldType) {
-      if (newType!== ''){
+      if (newType !== '') {
         var parsed = JSON.parse(newType)
         if (parsed.responseMessageType === 'SpriteUpdate') {
           parsed.spriteUpdates.forEach(spriteUpdate => this.handleSpriteUpdate(spriteUpdate))
@@ -144,28 +144,38 @@ export default {
       sprite.scaleY = scaleY
       this.stage.addChild(sprite)
     },
-    handleInput(event) {
+    handleInput (event) {
       websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVERIGHT' + '}')
     },
-    handleSpriteUpdate(spriteUpdate) {
-      switch(spriteUpdate.updateType) {
-            case 'MOVE':
-              this.updateSprite(spriteUpdate.objectNr, spriteUpdate.spriteType, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
-              this.updateLabel(spriteUpdate.objectNr, spriteUpdate.label, spriteUpdate.position.x, spriteUpdate.position.y)
-            break;
-            case 'CREATE':
-              this.addSprite(spriteUpdate.objectNr, spriteUpdate.spriteType, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
-              this.addLabel(spriteUpdate.objectNr, spriteUpdate.label, spriteUpdate.position.x, spriteUpdate.position.y)
-            break;            
-            case 'DESTROY':
-              this.deleteSprite(spriteUpdate.objectNr)
-            break;
-            default:
-              console.log('Unknown spriteUpdate type: ' + spriteUpdate.updateType)
-      } 
+    handleSpriteUpdate (spriteUpdate) {
+      switch (spriteUpdate.updateType) {
+        case 'MOVE':
+          this.updateSprite(spriteUpdate.objectNr, spriteUpdate.spriteType, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
+          this.updateLabel(spriteUpdate.objectNr, spriteUpdate.label, spriteUpdate.position.x, spriteUpdate.position.y)
+          break
+        case 'CREATE':
+          this.addSprite(spriteUpdate.objectNr, spriteUpdate.spriteType, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
+          this.addLabel(spriteUpdate.objectNr, spriteUpdate.label, spriteUpdate.position.x, spriteUpdate.position.y)
+          break
+        case 'DESTROY':
+          this.deleteSprite(spriteUpdate.objectNr)
+          break
+        default:
+          console.log('Unknown spriteUpdate type: ' + spriteUpdate.updateType)
+      }
     },
     addSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = new cjs.Sprite(this.spritesheet, spriteType)
+      this.adjustSpriteTransform(sprite, scaleX, scaleY, posX, posY, flipped)
+      this.stage.addChild(sprite)
+      this.spriteMap.set(spriteNr, sprite)
+    },
+    updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
+      var sprite = this.spriteMap.get(spriteNr)
+      sprite.gotoAndPlay(spriteType)
+      this.adjustSpriteTransform(sprite, scaleX, scaleY, posX, posY, flipped)
+    },
+    adjustSpriteTransform (sprite, scaleX, scaleY, posX, posY, flipped) {
       sprite.scaleX = scaleX / this.spriteSize / this.spriteScaleFactor
       sprite.scaleY = scaleY / this.spriteSize / this.spriteScaleFactor
       sprite.x = posX
@@ -173,8 +183,6 @@ export default {
       if (flipped === true) {
         sprite.scaleX = -sprite.scaleX
       }
-      this.stage.addChild(sprite)
-      this.spriteMap.set(spriteNr, sprite)
     },
     addLabel (spriteNr, labelText, posX, posY) {
       var text = new cjs.Text(labelText, this.textFont, this.textColor)
@@ -183,18 +191,7 @@ export default {
       this.stage.addChild(text)
       this.labelMap.set(spriteNr, text)
     },
-    updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
-      var sprite = this.spriteMap.get(spriteNr)
-      sprite.gotoAndPlay(spriteType)
-      sprite.scaleX = scaleX / this.spriteSize / this.spriteScaleFactor
-      sprite.scaleY = scaleY / this.spriteSize / this.spriteScaleFactor
-      sprite.x = posX
-      sprite.y = this.h - posY - this.spriteSize * sprite.scaleY
-      if (flipped === true) {
-        sprite.scaleX = -sprite.scaleX
-      }
-    },
-    updateLabel (spriteNr, labelText, posX, posY){
+    updateLabel (spriteNr, labelText, posX, posY) {
       var text = this.labelMap.get(spriteNr)
       text.text = labelText
       text.x = posX
