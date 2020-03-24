@@ -1,14 +1,7 @@
 <template>
   <div class="hello">
     <h2>{{ msg }}</h2>
-<p> Most recent update: {{ recentMessage }} </p>
 <canvas id="gamePane" ref="gamePane" :width="w" :height="h"></canvas>
-<br/>
-Sprite debug:<br/>
-<button @click="addTestSprite">Create</button>
-<button @click="updateAllSprites">Update</button>
-<button @click="deleteAllSprites">Delete</button>
-<button @click="showAllSprites">Show all animations</button>
   </div>
 </template>
 
@@ -16,15 +9,21 @@ Sprite debug:<br/>
 import * as cjs from '@createjs/easeljs'
 import websocketStore from '../resources/websocket-store'
 export default {
-  name: 'HelloWorld',
+  name: 'GameView',
   data () {
     return {
       msg: 'In game...',
       w: 800,
       h: 600,
+      worldWidth: 600,
+      worldHeight: 600,
       debugSpriteCount: 0,
+      spriteSize: 32,
+      spriteScaleFactor: '',
       spriteMap: new Map(),
-      recentMessage: ''
+      textFont: "14px Consolas",
+      textColor: "#000000",
+      labelMap: new Map()
     }
   },
   computed: {
@@ -37,16 +36,17 @@ export default {
       if (newType!== ''){
         var parsed = JSON.parse(newType)
         if (parsed.responseMessageType === 'SpriteUpdate') {
-          this.recentMessage = newType
           parsed.spriteUpdates.forEach(spriteUpdate => this.handleSpriteUpdate(spriteUpdate))
         }
       }
     }
   },
   mounted () {
+    this.spriteScaleFactor = this.h / this.worldHeight
     this.init()
     this.stage = new cjs.Stage(this.$refs.gamePane)
     cjs.Ticker.addEventListener('tick', this.stage)
+    cjs.Ticker.addEventListener('tick', this.handleInput)
     var amount = Math.floor(Math.random() * 35)
     for (var i = 0; i < amount; i++) {
       var xPos = Math.floor(Math.random() * this.w)
@@ -59,7 +59,7 @@ export default {
     init () {
       var data = {
         images: ['static/spritesheet.png'],
-        frames: {width: 32, height: 32},
+        frames: {width: this.spriteSize, height: this.spriteSize},
         animations: {
           WEAPONPICKUP: {
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
@@ -84,7 +84,7 @@ export default {
           },
           slashEnd: 42,
           PROJECTILESWORD: [36, 37, 38, 39, 40, 41, 'slashEnd'],
-          PROJECTILEBOMB: 43,
+          PROJECTILEBOMBOLD: 43,
           PROJECTILEBULLET: 44,
           NONE: 45
         },
@@ -113,7 +113,7 @@ export default {
       this.deleteAllSprites()
       var y = 0
       for (const animation of this.spritesheet.animations) {
-        this.addSprite(this.debugSpriteCount, animation, this.debugSpriteCount * 32, y, 1, 1, false)
+        this.addSprite(this.debugSpriteCount, animation, this.debugSpriteCount * this.spriteSize, y, 1, 1, false)
         this.debugSpriteCount++
       }
     },
@@ -144,13 +144,18 @@ export default {
       sprite.scaleY = scaleY
       this.stage.addChild(sprite)
     },
+    handleInput(event) {
+      websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVERIGHT' + '}')
+    },
     handleSpriteUpdate(spriteUpdate) {
       switch(spriteUpdate.updateType) {
             case 'MOVE':
               this.updateSprite(spriteUpdate.objectNr, spriteUpdate.spriteType, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
+              this.updateLabel(spriteUpdate.objectNr, spriteUpdate.label, spriteUpdate.position.x, spriteUpdate.position.y)
             break;
             case 'CREATE':
               this.addSprite(spriteUpdate.objectNr, spriteUpdate.spriteType, spriteUpdate.position.x, spriteUpdate.position.y, spriteUpdate.size.x, spriteUpdate.size.y, spriteUpdate.isFacingLeft)
+              this.addLabel(spriteUpdate.objectNr, spriteUpdate.label, spriteUpdate.position.x, spriteUpdate.position.y)
             break;            
             case 'DESTROY':
               this.deleteSprite(spriteUpdate.objectNr)
@@ -161,32 +166,49 @@ export default {
     },
     addSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = new cjs.Sprite(this.spritesheet, spriteType)
+      sprite.scaleX = scaleX / this.spriteSize / this.spriteScaleFactor
+      sprite.scaleY = scaleY / this.spriteSize / this.spriteScaleFactor
       sprite.x = posX
-      sprite.y = posY
-      sprite.scaleX = scaleX
-      sprite.scaleY = scaleY
+      sprite.y = this.h - posY - this.spriteSize * sprite.scaleY
       if (flipped === true) {
         sprite.scaleX = -sprite.scaleX
       }
       this.stage.addChild(sprite)
       this.spriteMap.set(spriteNr, sprite)
-      alert('added ' +sprite)
+    },
+    addLabel (spriteNr, labelText, posX, posY) {
+      var text = new cjs.Text(labelText, this.textFont, this.textColor)
+      text.x = posX
+      text.y = this.h - posY - this.spriteSize
+      this.stage.addChild(text)
+      this.labelMap.set(spriteNr, text)
     },
     updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = this.spriteMap.get(spriteNr)
       sprite.gotoAndPlay(spriteType)
+      sprite.scaleX = scaleX / this.spriteSize / this.spriteScaleFactor
+      sprite.scaleY = scaleY / this.spriteSize / this.spriteScaleFactor
       sprite.x = posX
-      sprite.y = posY
-      sprite.scaleX = scaleX
-      sprite.scaleY = scaleY
+      sprite.y = this.h - posY - this.spriteSize * sprite.scaleY
       if (flipped === true) {
         sprite.scaleX = -sprite.scaleX
       }
+    },
+    updateLabel (spriteNr, labelText, posX, posY){
+      var text = this.labelMap.get(spriteNr)
+      text.text = labelText
+      text.x = posX
+      text.y = this.h - posY - this.spriteSize
     },
     deleteSprite (spriteNr) {
       var sprite = this.spriteMap.get(spriteNr)
       this.stage.removeChild(sprite)
       this.spriteMap.delete(spriteNr)
+    },
+    deleteLabel (spriteNr) {
+      var label = this.labelMap.get(spriteNr)
+      this.stage.removeChild(label)
+      this.labelMap.delete(spriteNr)
     }
 
   }
