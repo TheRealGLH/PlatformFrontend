@@ -23,6 +23,12 @@ export default {
       spriteMap: new Map(),
       textFont: '14px Consolas',
       textColor: '#000000',
+      inputLeftPressed: false,
+      inputRightPressed: false,
+      inputJumpPressed: false,
+      inputCrouchPressed: false,
+      inputShootPressed: false,
+      testMostRecentInput: '',
       labelMap: new Map()
     }
   },
@@ -41,12 +47,17 @@ export default {
       }
     }
   },
+  created () {
+  
+  },
   mounted () {
+    window.addEventListener('keydown', this.handleKeyDown)
+    window.addEventListener('keyup', this.handleKeyUp)
     this.spriteScaleFactor = this.h / this.worldHeight
     this.init()
     this.stage = new cjs.Stage(this.$refs.gamePane)
     cjs.Ticker.addEventListener('tick', this.stage)
-    cjs.Ticker.addEventListener('tick', this.handleInput)
+    cjs.Ticker.addEventListener('tick', this.sendInput)
     var amount = Math.floor(Math.random() * 35)
     for (var i = 0; i < amount; i++) {
       var xPos = Math.floor(Math.random() * this.w)
@@ -76,6 +87,7 @@ export default {
           PLATFORM: 25,
           UNSOLIDPLATFORM: 26,
           PLAYER: 27,
+          PLAYERINVULN: [27, 42],
           PROJECTILEROCKET: {
             frames: [28, 29, 30, 31, 32, 33, 34, 35]
           },
@@ -144,8 +156,57 @@ export default {
       sprite.scaleY = scaleY
       this.stage.addChild(sprite)
     },
-    handleInput (event) {
-      websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVERIGHT' + '}')
+    handleKeyDown (event) {
+      this.testMostRecentInput = event.code
+      switch (event.code) {
+      case 'W':
+        this.inputJumpPressed = true
+        break
+      case 'A':
+        this.inputLeftPressed = true
+        break
+      case 'D':
+        this.inputRightPressed = true
+        break
+      case 'S':
+        this.inputCrouchPressed = true
+        break
+      case 'Space':
+        this.inputShootPressed = true
+        break
+      }
+    },
+    handleKeyUp (event) {
+      switch (event.code) {
+      case 'W':
+        this.inputJumpPressed = false
+        break
+      case 'A':
+        this.inputLeftPressed = false
+        break
+      case 'D':
+        this.inputRightPressed = false
+        break
+      case 'S':
+        this.inputCrouchPressed = false
+        break
+      case 'Space':
+        this.inputShootPressed = false
+        break
+      }
+    },
+    sendInput (event) {
+      if (this.inputLeftPressed === true) {
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVELEFT' + '}')
+      } else if (this.inputRightPressed === true){
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVERIGHT' + '}')
+      }
+      if (this.inputJumpPressed === true) {
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'JUMP' + '}')
+      }
+      if (this.inputShootPressed === true) {
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'SHOOT' + '}')
+      }
     },
     handleSpriteUpdate (spriteUpdate) {
       switch (spriteUpdate.updateType) {
@@ -159,6 +220,7 @@ export default {
           break
         case 'DESTROY':
           this.deleteSprite(spriteUpdate.objectNr)
+          this.deleteLabel(spriteUpdate.objectNr)
           break
         default:
           console.log('Unknown spriteUpdate type: ' + spriteUpdate.updateType)
