@@ -82,6 +82,9 @@ transform: scale(1.5, 1.5);
 .inputUserInfo:focus,.inputUserInfo:hover{
   background-color:#fff;
 }
+.inputUserInfoError{
+   background-color:#ed4140;   
+}
 .menuBox{
 	background-color:#9fb2af;
     padding:4px;
