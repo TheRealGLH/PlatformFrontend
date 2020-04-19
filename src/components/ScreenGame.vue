@@ -234,7 +234,9 @@ export default {
     },
     updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = this.spriteMap.get(spriteNr)
-      sprite.gotoAndPlay(spriteType)
+      if (sprite.currentAnimation !== spriteType) {
+        sprite.gotoAndPlay(spriteType)
+      }
       this.adjustSpriteTransform(sprite, scaleX, scaleY, posX, posY, flipped)
     },
     adjustSpriteTransform (sprite, scaleX, scaleY, posX, posY, flipped) {
