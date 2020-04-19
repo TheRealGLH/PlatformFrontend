@@ -19,7 +19,7 @@ ws.onclose = function () {
 }
 
 ws.onerror = function (err) {
-  alert('Error connecting to the server: ' + err)
+  alert('Error connecting to the server: ' + err.message)
   // TODO make the page respond to this... Perhaps remove the template from the page?
 }
 const websocketStore = new Vuex.Store({

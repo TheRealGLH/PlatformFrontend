@@ -18,7 +18,7 @@ Select map:
 <transition name="fade">
 <img id="lobbyMapPreview" :src="mapPreviewURL" @error="mapImageNotFound" :width="previewWidth" :height="previewHeight" :key="lobbyMapPreview"/>
 </transition><br/>
-<button>Start game</button>
+<button @click="sendStartGame">Start game</button>
 </div>
   </div>
   <button @click="testMapSwitch" disabled>Test mapswitch</button>
@@ -34,6 +34,7 @@ export default {
   data () {
     return {
       msg: 'In lobby',
+      isLobbyLeader: true,
       players: [],
       player: {name: '', number: 0},
       maps: [],
@@ -61,6 +62,8 @@ export default {
           this.maps = parsed.mapNames
         } else if (parsed.responseMessageType === 'LobbyMapChange') {
           this.setMapInfo(parsed.mapName)
+        } else if (parsed.responseMessageType === 'NotifyStart') {
+          this.$router.push('/game')
         }
       }
     }
@@ -89,11 +92,14 @@ export default {
     },
     // Events
     onMapChange (event) {
-      this.setMapInfo(event.target.value)
+      // this.setMapInfo(event.target.value)
       this.sendMapChoice(event.target.value)
     },
     sendMapChoice (mapName) {
       websocketStore.commit('sendMessage', '{ messageType: \'MapChange\', mapName: ' + mapName + ' }')
+    },
+    sendStartGame () {
+      websocketStore.commit('sendMessage', '{ messageType: \'StartGame\' }')
     },
     // Test methods
     testMapSwitch () {
