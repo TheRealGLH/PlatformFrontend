@@ -40,7 +40,7 @@ const websocketStore = new Vuex.Store({
   },
   mutations: {
     sendMessage (state, json) {
-      ws.send(json)
+    ws.send(json)
     }
   }
 })
