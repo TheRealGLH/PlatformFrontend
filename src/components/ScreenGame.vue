@@ -48,11 +48,10 @@ export default {
     }
   },
   created () {
-  
+    window.addEventListener('keyup', this.handleKeyUp)
+    window.addEventListener('keydown', this.handleKeyDown)
   },
   mounted () {
-    window.addEventListener('keydown', this.handleKeyDown)
-    window.addEventListener('keyup', this.handleKeyUp)
     this.spriteScaleFactor = this.h / this.worldHeight
     this.init()
     this.stage = new cjs.Stage(this.$refs.gamePane)
@@ -159,52 +158,62 @@ export default {
     handleKeyDown (event) {
       this.testMostRecentInput = event.code
       switch (event.code) {
-      case 'W':
+      case 'KeyW':
+      //W
         this.inputJumpPressed = true
         break
-      case 'A':
+      case 'KeyA':
+      //A
         this.inputLeftPressed = true
         break
-      case 'D':
+      case 'KeyD':
+      //D
         this.inputRightPressed = true
         break
-      case 'S':
+      case 'KeyS':
+      //S
         this.inputCrouchPressed = true
         break
       case 'Space':
+      //space
         this.inputShootPressed = true
         break
       }
     },
     handleKeyUp (event) {
       switch (event.code) {
-      case 'W':
+      case 'KeyW':
+      //W
         this.inputJumpPressed = false
         break
-      case 'A':
+      case 'KeyA':
+      //A
         this.inputLeftPressed = false
         break
-      case 'D':
+      case 'KeyD':
+      //D
         this.inputRightPressed = false
         break
-      case 'S':
+      case 'KeyS':
+      //S
         this.inputCrouchPressed = false
         break
       case 'Space':
+      //space
         this.inputShootPressed = false
         break
       }
     },
     sendInput (event) {
-      if (this.inputLeftPressed === true) {
+      if (this.inputLeftPressed == true) {
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVELEFT' + '}')
-      } else if (this.inputRightPressed === true){
+      } else if (this.inputRightPressed == true){
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVERIGHT' + '}')
       }
-      if (this.inputJumpPressed === true) {
+      if (this.inputJumpPressed == true) {
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'JUMP' + '}')
       }
-      if (this.inputShootPressed === true) {
+      if (this.inputShootPressed == true) {
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'SHOOT' + '}')
       }
     },
@@ -234,6 +243,10 @@ export default {
     },
     updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = this.spriteMap.get(spriteNr)
+      if(sprite === undefined){
+        addSprite(spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped)
+        return
+      }
       if (sprite.currentAnimation !== spriteType) {
         sprite.gotoAndPlay(spriteType)
       }
@@ -246,6 +259,7 @@ export default {
       sprite.y = this.h - posY - this.spriteSize * sprite.scaleY
       if (flipped === true) {
         sprite.scaleX = -sprite.scaleX
+        sprite.x -= sprite.scaleX * this.spriteSize
       }
     },
     addLabel (spriteNr, labelText, posX, posY) {
