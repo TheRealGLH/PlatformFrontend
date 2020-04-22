@@ -243,6 +243,10 @@ export default {
     },
     updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = this.spriteMap.get(spriteNr)
+      if(sprite === undefined){
+        addSprite(spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped)
+        return
+      }
       if (sprite.currentAnimation !== spriteType) {
         sprite.gotoAndPlay(spriteType)
       }
@@ -255,6 +259,7 @@ export default {
       sprite.y = this.h - posY - this.spriteSize * sprite.scaleY
       if (flipped === true) {
         sprite.scaleX = -sprite.scaleX
+        sprite.x -= sprite.scaleX * this.spriteSize
       }
     },
     addLabel (spriteNr, labelText, posX, posY) {
