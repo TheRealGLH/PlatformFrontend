@@ -2,12 +2,14 @@
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
+const webpack = require('webpack');
 const vueLoaderConfig = require('./vue-loader.conf')
 let commitHash = require('child_process')
   .execSync('git rev-parse --short HEAD')
   .toString()
-console.log(commitHash)
+// console.log(commitHash)
 process.env.VUE_APP_GIT_HASH = commitHash.toString()
+process.env.WEBSOCKETURL = 'ws://localhost:8095/platform/'
 console.log(process.env.VUE_APP_GIT_HASH)
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -83,6 +85,11 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      GITHASH: JSON.stringify(commitHash),
+    })
+    ],
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).

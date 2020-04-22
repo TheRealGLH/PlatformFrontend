@@ -17,8 +17,10 @@
     "@createjs/easeljs": "^2.0.0-beta.4",
     "git-describe": "^4.0.4",
     "git-rev-sync": "^2.0.0",
+    "module": "^1.2.5",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
