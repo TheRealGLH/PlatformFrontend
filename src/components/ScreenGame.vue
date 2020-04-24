@@ -158,62 +158,62 @@ export default {
     handleKeyDown (event) {
       this.testMostRecentInput = event.code
       switch (event.code) {
-      case 'KeyW':
-      //W
-        this.inputJumpPressed = true
-        break
-      case 'KeyA':
-      //A
-        this.inputLeftPressed = true
-        break
-      case 'KeyD':
-      //D
-        this.inputRightPressed = true
-        break
-      case 'KeyS':
-      //S
-        this.inputCrouchPressed = true
-        break
-      case 'Space':
-      //space
-        this.inputShootPressed = true
-        break
+        case 'KeyW':
+          // W
+          this.inputJumpPressed = true
+          break
+        case 'KeyA':
+          // A
+          this.inputLeftPressed = true
+          break
+        case 'KeyD':
+          // D
+          this.inputRightPressed = true
+          break
+        case 'KeyS':
+          // S
+          this.inputCrouchPressed = true
+          break
+        case 'Space':
+          // space
+          this.inputShootPressed = true
+          break
       }
     },
     handleKeyUp (event) {
       switch (event.code) {
-      case 'KeyW':
-      //W
-        this.inputJumpPressed = false
-        break
-      case 'KeyA':
-      //A
-        this.inputLeftPressed = false
-        break
-      case 'KeyD':
-      //D
-        this.inputRightPressed = false
-        break
-      case 'KeyS':
-      //S
-        this.inputCrouchPressed = false
-        break
-      case 'Space':
-      //space
-        this.inputShootPressed = false
-        break
+        case 'KeyW':
+          // W
+          this.inputJumpPressed = false
+          break
+        case 'KeyA':
+          // A
+          this.inputLeftPressed = false
+          break
+        case 'KeyD':
+          // D
+          this.inputRightPressed = false
+          break
+        case 'KeyS':
+          // S
+          this.inputCrouchPressed = false
+          break
+        case 'Space':
+          // space
+          this.inputShootPressed = false
+          break
       }
     },
     sendInput (event) {
-      if (this.inputLeftPressed == true) {
+      if (this.inputLeftPressed === true) {
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVELEFT' + '}')
-      } else if (this.inputRightPressed == true){
+      } else if (this.inputRightPressed === true) {
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVERIGHT' + '}')
       }
-      if (this.inputJumpPressed == true) {
+      if (this.inputJumpPressed === true) {
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'JUMP' + '}')
       }
-      if (this.inputShootPressed == true) {
+      if (this.inputShootPressed === true) {
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'SHOOT' + '}')
       }
     },
@@ -243,8 +243,8 @@ export default {
     },
     updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = this.spriteMap.get(spriteNr)
-      if(sprite === undefined){
-        addSprite(spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped)
+      if (sprite === undefined) {
+        this.addSprite(spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped)
         return
       }
       if (sprite.currentAnimation !== spriteType) {
