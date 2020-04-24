@@ -30,6 +30,7 @@ export default {
 <style>
 body{
  background-color: #f6f8f7;
+ background-image: 'static/noise.png'
 }
 a{
  font-weight: bold;
