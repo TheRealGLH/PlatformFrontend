@@ -44,6 +44,11 @@ export default {
         if (parsed.responseMessageType === 'SpriteUpdate') {
           parsed.spriteUpdates.forEach(spriteUpdate => this.handleSpriteUpdate(spriteUpdate))
         }
+        else if (parsed.responseMessageType === 'GameState') {
+          if (parsed.gameState === 'GAMEOVER') {
+            this.$router.push('/lobby')
+          }
+        }
       }
     }
   },
