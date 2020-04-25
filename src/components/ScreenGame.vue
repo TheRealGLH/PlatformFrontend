@@ -91,7 +91,7 @@ export default {
           PLATFORM: 25,
           UNSOLIDPLATFORM: 26,
           PLAYER: 27,
-          PLAYERINVULN: [27, 42],
+          PLAYERINVULN: [27, 45],
           PROJECTILEROCKET: {
             frames: [28, 29, 30, 31, 32, 33, 34, 35]
           },
@@ -162,48 +162,49 @@ export default {
     },
     handleKeyDown (event) {
       this.testMostRecentInput = event.code
-      switch (event.code) {
-        case 'KeyW':
+      switch (event.keyCode) {
+        case 87:
           // W
           this.inputJumpPressed = true
           break
-        case 'KeyA':
+        case 65:
           // A
           this.inputLeftPressed = true
           break
-        case 'KeyD':
+        case 68:
           // D
           this.inputRightPressed = true
           break
-        case 'KeyS':
+        case 83:
           // S
           this.inputCrouchPressed = true
           break
-        case 'Space':
+        case 32:
           // space
           this.inputShootPressed = true
           break
       }
     },
     handleKeyUp (event) {
-      switch (event.code) {
+      switch (event.keyCode) {
         case 'KeyW':
+        case 87:
           // W
           this.inputJumpPressed = false
           break
-        case 'KeyA':
+        case 65:
           // A
           this.inputLeftPressed = false
           break
-        case 'KeyD':
+        case 68:
           // D
           this.inputRightPressed = false
           break
-        case 'KeyS':
+        case 83:
           // S
           this.inputCrouchPressed = false
           break
-        case 'Space':
+        case 32:
           // space
           this.inputShootPressed = false
           break

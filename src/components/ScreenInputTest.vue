@@ -8,6 +8,7 @@
             <div id="inputRight" :class="rightClass">right</div>
             <div id="inputShoot" :class="shootClass">shoot</div>
             <div id="inputCrouch" :class="crouchClass">crouch</div>
+            Unknown keyCode: <p>{{ unknownKeycode }}</p>
         </div>
     </div>
   </div>
@@ -26,7 +27,8 @@ export default {
       leftClass: 'inputBox',
       rightClass: 'inputBox',
       shootClass: 'inputBox',
-      crouchClass: 'inputBox'
+      crouchClass: 'inputBox',
+      unknownKeycode: 'none so far'
     }
   },
 
@@ -58,6 +60,8 @@ export default {
         // S
           this.crouchClass = this.pressedClass
           break
+        default:
+          this.unknownKeycode = e.keyCode
       }
     },
     // TODO this needs to be a seperate method because you seemingly can't pass parameters to event handlers?????
