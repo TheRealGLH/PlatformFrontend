@@ -3,6 +3,7 @@
     <h2>{{ msg }}</h2>
 <canvas id="gamePane" ref="gamePane" :width="w" :height="h"></canvas>
   </div>
+
 </template>
 
 <script>
@@ -91,7 +92,9 @@ export default {
           PLATFORM: 25,
           UNSOLIDPLATFORM: 26,
           PLAYER: 27,
-          PLAYERINVULN: [27, 45],
+          PLAYERINVULN: {
+            frames: [27, 42]
+          },
           PROJECTILEROCKET: {
             frames: [28, 29, 30, 31, 32, 33, 34, 35]
           },
@@ -99,7 +102,9 @@ export default {
             frames: [36, 37, 38, 39, 40]
           },
           slashEnd: 42,
-          PROJECTILESWORD: [36, 37, 38, 39, 40, 41, 'slashEnd'],
+          PROJECTILESWORD: {
+            frames: [36, 37, 38, 39, 40, 41, 'slashEnd']
+          },
           PROJECTILEBOMBOLD: 43,
           PROJECTILEBULLET: 44,
           NONE: 45
