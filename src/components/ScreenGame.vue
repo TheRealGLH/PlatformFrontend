@@ -3,6 +3,7 @@
     <h2>{{ msg }}</h2>
 <canvas id="gamePane" ref="gamePane" :width="w" :height="h"></canvas>
   </div>
+
 </template>
 
 <script>
@@ -45,7 +46,7 @@ export default {
           parsed.spriteUpdates.forEach(spriteUpdate => this.handleSpriteUpdate(spriteUpdate))
         }
         else if (parsed.responseMessageType === 'GameState') {
-          if (parsed.gameState === 'GAMEOVER') {
+          if (parsed.gameStateEvent.gameState === 'GAMEOVER') {
             this.$router.push('/lobby')
           }
         }
@@ -91,7 +92,9 @@ export default {
           PLATFORM: 25,
           UNSOLIDPLATFORM: 26,
           PLAYER: 27,
-          PLAYERINVULN: [27, 42],
+          PLAYERINVULN: {
+            frames: [27, 42]
+          },
           PROJECTILEROCKET: {
             frames: [28, 29, 30, 31, 32, 33, 34, 35]
           },
@@ -99,7 +102,9 @@ export default {
             frames: [36, 37, 38, 39, 40]
           },
           slashEnd: 42,
-          PROJECTILESWORD: [36, 37, 38, 39, 40, 41, 'slashEnd'],
+          PROJECTILESWORD: {
+            frames: [36, 37, 38, 39, 40, 41, 'slashEnd']
+          },
           PROJECTILEBOMBOLD: 43,
           PROJECTILEBULLET: 44,
           NONE: 45
@@ -162,48 +167,49 @@ export default {
     },
     handleKeyDown (event) {
       this.testMostRecentInput = event.code
-      switch (event.code) {
-        case 'KeyW':
+      switch (event.keyCode) {
+        case 87:
           // W
           this.inputJumpPressed = true
           break
-        case 'KeyA':
+        case 65:
           // A
           this.inputLeftPressed = true
           break
-        case 'KeyD':
+        case 68:
           // D
           this.inputRightPressed = true
           break
-        case 'KeyS':
+        case 83:
           // S
           this.inputCrouchPressed = true
           break
-        case 'Space':
+        case 32:
           // space
           this.inputShootPressed = true
           break
       }
     },
     handleKeyUp (event) {
-      switch (event.code) {
+      switch (event.keyCode) {
         case 'KeyW':
+        case 87:
           // W
           this.inputJumpPressed = false
           break
-        case 'KeyA':
+        case 65:
           // A
           this.inputLeftPressed = false
           break
-        case 'KeyD':
+        case 68:
           // D
           this.inputRightPressed = false
           break
-        case 'KeyS':
+        case 83:
           // S
           this.inputCrouchPressed = false
           break
-        case 'Space':
+        case 32:
           // space
           this.inputShootPressed = false
           break
