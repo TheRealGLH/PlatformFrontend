@@ -219,7 +219,7 @@ export default {
       if (this.inputLeftPressed === true) {
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'MOVELEFT' + '\'}')
       } else if (this.inputRightPressed === true) {
-        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \' ' + 'MOVERIGHT' + '\'}')
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'MOVERIGHT' + '\'}')
       }
       if (this.inputJumpPressed === true) {
         websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'JUMP' + '\'}')
