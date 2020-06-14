@@ -217,15 +217,15 @@ export default {
     },
     sendInput (event) {
       if (this.inputLeftPressed === true) {
-        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVELEFT' + '}')
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'MOVELEFT' + '\'}')
       } else if (this.inputRightPressed === true) {
-        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVERIGHT' + '}')
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \' ' + 'MOVERIGHT' + '\'}')
       }
       if (this.inputJumpPressed === true) {
-        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'JUMP' + '}')
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'JUMP' + '\'}')
       }
       if (this.inputShootPressed === true) {
-        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'SHOOT' + '}')
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'SHOOT' + '\'}')
       }
     },
     handleSpriteUpdate (spriteUpdate) {

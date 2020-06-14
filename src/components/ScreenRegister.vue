@@ -135,7 +135,7 @@ export default {
         if (this.registerUserName && this.registerPassword && this.registerPasswordConfirm) {
           this.loadingVisible = this.visibleTagProp
           this.registerButtonDisabled = true
-          websocketStore.commit('sendMessage', '{ messageType: \'Register\', name: ' + this.registerUserName + ', password: ' + this.registerPassword + ' }')
+          websocketStore.commit('sendMessage', '{ messageType: \'Register\', name: \'' + this.registerUserName + '\', password: ' + this.registerPassword + ' }')
         } else {
           this.showErrorMessage(this.registerMsgFillIn)
         }
