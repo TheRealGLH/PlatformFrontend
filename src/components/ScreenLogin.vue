@@ -126,7 +126,7 @@ export default {
       if (this.loginUserName && this.loginPassword) {
         this.loadingVisible = this.visibleTagProp
         this.loginButtonDisabled = true
-        websocketStore.commit('sendMessage', '{ messageType: \'Login\', name: ' + this.loginUserName + ', password: ' + this.loginPassword + ' }')
+        websocketStore.commit('sendMessage', '{ messageType: \'Login\', name: \'' + this.loginUserName + '\', password: \'' + this.loginPassword + '\' }')
       } else {
         this.showErrorMessage(this.loginMsgFillIn)
       }

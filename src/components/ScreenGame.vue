@@ -3,6 +3,7 @@
     <h2>{{ msg }}</h2>
 <canvas id="gamePane" ref="gamePane" :width="w" :height="h"></canvas>
   </div>
+
 </template>
 
 <script>
@@ -43,6 +44,11 @@ export default {
         var parsed = JSON.parse(newType)
         if (parsed.responseMessageType === 'SpriteUpdate') {
           parsed.spriteUpdates.forEach(spriteUpdate => this.handleSpriteUpdate(spriteUpdate))
+        }
+        else if (parsed.responseMessageType === 'GameState') {
+          if (parsed.gameStateEvent.state === 'GAMEOVER') {
+            this.$router.push('/lobby')
+          }
         }
       }
     }
@@ -86,7 +92,9 @@ export default {
           PLATFORM: 25,
           UNSOLIDPLATFORM: 26,
           PLAYER: 27,
-          PLAYERINVULN: [27, 42],
+          PLAYERINVULN: {
+            frames: [27, 42]
+          },
           PROJECTILEROCKET: {
             frames: [28, 29, 30, 31, 32, 33, 34, 35]
           },
@@ -94,7 +102,9 @@ export default {
             frames: [36, 37, 38, 39, 40]
           },
           slashEnd: 42,
-          PROJECTILESWORD: [36, 37, 38, 39, 40, 41, 'slashEnd'],
+          PROJECTILESWORD: {
+            frames: [36, 37, 38, 39, 40, 41, 'slashEnd']
+          },
           PROJECTILEBOMBOLD: 43,
           PROJECTILEBULLET: 44,
           NONE: 45
@@ -157,64 +167,65 @@ export default {
     },
     handleKeyDown (event) {
       this.testMostRecentInput = event.code
-      switch (event.code) {
-      case 'KeyW':
-      //W
-        this.inputJumpPressed = true
-        break
-      case 'KeyA':
-      //A
-        this.inputLeftPressed = true
-        break
-      case 'KeyD':
-      //D
-        this.inputRightPressed = true
-        break
-      case 'KeyS':
-      //S
-        this.inputCrouchPressed = true
-        break
-      case 'Space':
-      //space
-        this.inputShootPressed = true
-        break
+      switch (event.keyCode) {
+        case 87:
+          // W
+          this.inputJumpPressed = true
+          break
+        case 65:
+          // A
+          this.inputLeftPressed = true
+          break
+        case 68:
+          // D
+          this.inputRightPressed = true
+          break
+        case 83:
+          // S
+          this.inputCrouchPressed = true
+          break
+        case 32:
+          // space
+          this.inputShootPressed = true
+          break
       }
     },
     handleKeyUp (event) {
-      switch (event.code) {
-      case 'KeyW':
-      //W
-        this.inputJumpPressed = false
-        break
-      case 'KeyA':
-      //A
-        this.inputLeftPressed = false
-        break
-      case 'KeyD':
-      //D
-        this.inputRightPressed = false
-        break
-      case 'KeyS':
-      //S
-        this.inputCrouchPressed = false
-        break
-      case 'Space':
-      //space
-        this.inputShootPressed = false
-        break
+      switch (event.keyCode) {
+        case 'KeyW':
+        case 87:
+          // W
+          this.inputJumpPressed = false
+          break
+        case 65:
+          // A
+          this.inputLeftPressed = false
+          break
+        case 68:
+          // D
+          this.inputRightPressed = false
+          break
+        case 83:
+          // S
+          this.inputCrouchPressed = false
+          break
+        case 32:
+          // space
+          this.inputShootPressed = false
+          break
       }
     },
     sendInput (event) {
-      if (this.inputLeftPressed == true) {
-        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVELEFT' + '}')
-      } else if (this.inputRightPressed == true){
-        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'MOVERIGHT' + '}')
+      if (this.inputLeftPressed === true) {
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'MOVELEFT' + '\'}')
+      } else if (this.inputRightPressed === true) {
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'MOVERIGHT' + '\'}')
       }
-      if (this.inputJumpPressed == true) {
-        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'JUMP' + '}')
+      if (this.inputJumpPressed === true) {
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'JUMP' + '\'}')
       }
-      if (this.inputShootPressed == true) {
-        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: ' + 'SHOOT' + '}')
+      if (this.inputShootPressed === true) {
+        websocketStore.commit('sendMessage', '{ messageType: \'Input\', inputType: \'' + 'SHOOT' + '\'}')
       }
     },
     handleSpriteUpdate (spriteUpdate) {
@@ -243,8 +254,8 @@ export default {
     },
     updateSprite (spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped) {
       var sprite = this.spriteMap.get(spriteNr)
-      if(sprite === undefined){
-        addSprite(spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped)
+      if (sprite === undefined) {
+        this.addSprite(spriteNr, spriteType, posX, posY, scaleX, scaleY, flipped)
         return
       }
       if (sprite.currentAnimation !== spriteType) {

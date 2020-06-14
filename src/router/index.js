@@ -41,8 +41,7 @@ export default new Router({
       path: '/lobby',
       name: 'ScreenLobby',
       component: ScreenLobby
-    }
-    ,
+    },
     {
       path: '/input',
       name: 'ScreenInput',

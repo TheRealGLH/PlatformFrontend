@@ -8,10 +8,10 @@
             <div id="inputRight" :class="rightClass">right</div>
             <div id="inputShoot" :class="shootClass">shoot</div>
             <div id="inputCrouch" :class="crouchClass">crouch</div>
+            Unknown keyCode: <p>{{ unknownKeycode }}</p>
         </div>
     </div>
   </div>
-  
 
 </template>
 
@@ -27,66 +27,69 @@ export default {
       leftClass: 'inputBox',
       rightClass: 'inputBox',
       shootClass: 'inputBox',
-      crouchClass: 'inputBox'
+      crouchClass: 'inputBox',
+      unknownKeycode: 'none so far'
     }
   },
-  
+
   created () {
     window.addEventListener('keyup', this.keyReleased)
     window.addEventListener('keydown', this.keyPressed)
   },
 
   methods: {
-    keyPressed (e){
-      switch (e.keyCode){
+    keyPressed (e) {
+      switch (e.keyCode) {
         case 32:
-        //space
+        // space
           this.shootClass = this.pressedClass
-        break;
+          break
         case 65:
-        //A
+        // A
           this.leftClass = this.pressedClass
-        break;
+          break
         case 68:
-        //D
+        // D
           this.rightClass = this.pressedClass
-        break;
+          break
         case 87:
-        //W
+        // W
           this.jumpClass = this.pressedClass
-        break;
+          break
         case 83:
-        //S
+        // S
           this.crouchClass = this.pressedClass
-        break;
+          break
+        default:
+          this.unknownKeycode = e.keyCode
       }
     },
     // TODO this needs to be a seperate method because you seemingly can't pass parameters to event handlers?????
     keyReleased (e) {
-      switch (e.keyCode){
+      switch (e.keyCode) {
         case 32:
-        //space
+        // space
           this.shootClass = this.notPressedClass
-        break;
+          break
         case 65:
-        //A
+        // A
           this.leftClass = this.notPressedClass
-        break;
+          break
         case 68:
-        //D
+        // D
           this.rightClass = this.notPressedClass
-        break;
+          break
         case 87:
-        //W
+        // W
           this.jumpClass = this.notPressedClass
-        break;
+          break
         case 83:
-        //S
+        // S
           this.crouchClass = this.notPressedClass
-        break;
+          break
       }
     }
-  
+
   }
 }
 </script>
