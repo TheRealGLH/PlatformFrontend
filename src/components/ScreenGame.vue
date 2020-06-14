@@ -46,7 +46,7 @@ export default {
           parsed.spriteUpdates.forEach(spriteUpdate => this.handleSpriteUpdate(spriteUpdate))
         }
         else if (parsed.responseMessageType === 'GameState') {
-          if (parsed.gameStateEvent.gameState === 'GAMEOVER') {
+          if (parsed.gameStateEvent.state === 'GAMEOVER') {
             this.$router.push('/lobby')
           }
         }
