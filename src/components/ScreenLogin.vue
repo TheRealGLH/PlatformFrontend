@@ -67,6 +67,8 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
+      loginUserName: '',
+      loginPassword: '',
       visibleTagProp: 'display: inline-block;',
       invisibleTagProp: 'display: none;',
       errorVisible: 'display: none;',
