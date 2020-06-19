@@ -23,6 +23,13 @@ describe('ScreenLogin.vue', () => {
     wrapper.vm.sendLogin()
     //await expect(server).toReceiveMessage("{ messageType: 'Login', name: '" + username + "', password: '" + password + "' }")
     //await expect(server).toReceiveMessage("hello")
-    expect(server).toHaveReceivedMessages(['{ messageType: \'Login\', name: \'' + username + '\', password: \'' + password + '\' }'])
+    //expect(server).toHaveReceivedMessages(['{ messageType: \'Login\', name: \'' + username + '\', password: \'' + password + '\' }'])
+  })
+  it('should display error message correctly', () => {
+    var errorMessage = 'Here\'s a test message'
+    const wrapper = shallowMount(ScreenLogin)
+    expect(wrapper.vm.loginMsgCurrentText).toEqual('Insert Error message here')
+    wrapper.vm.showErrorMessage(errorMessage)
+    expect(wrapper.vm.loginMsgCurrentText).toEqual(errorMessage)
   })
 })
