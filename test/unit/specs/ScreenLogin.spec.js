@@ -6,8 +6,8 @@ import WS from 'jest-websocket-mock'
 describe('ScreenLogin.vue', () => {
   it('should have empty fields when application starts', () => {
     const wrapper = shallowMount(ScreenLogin)
-    expect(wrapper.loginUserName).toBeUndefined()
-    expect(wrapper.loginPassword).toBeUndefined()
+    expect(wrapper.vm.loginUserName).toEqual('')
+    expect(wrapper.vm.loginPassword).toEqual('')
   })
   it('should do stuff with sockets', async () => {
     const wrapper = shallowMount(ScreenLogin)
