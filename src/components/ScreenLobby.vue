@@ -19,6 +19,9 @@ Select map:
 <img id="lobbyMapPreview" :src="mapPreviewURL" @error="mapImageNotFound" :width="previewWidth" :height="previewHeight" :key="lobbyMapPreview"/>
 </transition><br/>
 <button @click="sendStartGame">Start game</button>
+</div>
+  </div>
+  </div>
 </template>
 
 <script>

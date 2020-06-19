@@ -1,9 +1,9 @@
 import {shallowMount} from '@vue/test-utils'
-import ScreenRegister from '@/components/ScreenLobby.vue'
+import ScreenLobby from '@/components/ScreenLobby.vue'
 
-describe('ScreenRegister.vue', () => {
+describe('ScreenLobby.vue', () => {
   it('should add players properly', () => {
-    const wrapper = shallowMount(ScreenRegister)
+    const wrapper = shallowMount(ScreenLobby)
     const vm = wrapper.vm
     var playerName = 'Mr Test'
     var playerNr = 1
@@ -19,7 +19,7 @@ describe('ScreenRegister.vue', () => {
     
   })
   it('should clear players properly', () => {
-    const wrapper = shallowMount(ScreenRegister)
+    const wrapper = shallowMount(ScreenLobby)
     const vm = wrapper.vm
     var playerName = 'Mr Test'
     var playerNr = 1
@@ -32,7 +32,7 @@ describe('ScreenRegister.vue', () => {
     expect(vm.players.length).toEqual(0)
   })
   it('should change map image properly', () => {
-    const wrapper = shallowMount(ScreenRegister)
+    const wrapper = shallowMount(ScreenLobby)
     const vm = wrapper.vm
     var mapName = 'de_dust'
     vm.setMapInfo(mapName)
