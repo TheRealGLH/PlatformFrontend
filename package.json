@@ -4,10 +4,14 @@
   "description": "Web frontend for Platform Wars",
   "author": "Martijn Daniels",
   "private": true,
+  "jest": {
+    "verbose": true,
+    "testURL": "https://localhost/"
+  },
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "unit": "jest --config test/unit/jest.conf.js --coverage",
+    "unit": "jest --config test/unit/jest.conf.js --coverage --testURL=\"http://localhost\"",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
@@ -23,6 +27,7 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.3",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
@@ -57,6 +62,8 @@
     "html-webpack-plugin": "^2.30.1",
     "jest": "^22.0.4",
     "jest-serializer-vue": "^0.3.0",
+    "jest-websocket-mock": "^2.0.2",
+    "mock-socket": "^9.0.3",
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",

@@ -21,9 +21,6 @@ Select map:
 <button @click="sendStartGame">Start game</button>
 </div>
   </div>
-  <button @click="testMapSwitch" disabled>Test mapswitch</button>
-  <button @click="testPlayerAdd">Test player</button>
-  <button @click="clearPlayers">clear players</button>
   </div>
 </template>
 
@@ -100,16 +97,6 @@ export default {
     },
     sendStartGame () {
       websocketStore.commit('sendMessage', '{ messageType: \'StartGame\' }')
-    },
-    // Test methods
-    testMapSwitch () {
-      var name = prompt('Give new name', 'battlefield')
-      this.setMapInfo(name)
-    },
-    testPlayerAdd () {
-      var name = prompt('Give player name', 'Fred')
-      var number = prompt('Give player number', '12')
-      this.addPlayer(name, number)
     }
   }
 }

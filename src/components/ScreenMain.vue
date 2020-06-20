@@ -7,8 +7,10 @@
   <router-link to="/register"><button id="btnRegister">Register</button></router-link>
 <br/>
   <router-link to="/game"><button id="btnDebug">Sprites</button></router-link>
+  <!--
 <br/>
   <router-link to="/input"><button id="btnInput">Test Input</button></router-link>
+  -->
   </div>
   </div>
 </template>
